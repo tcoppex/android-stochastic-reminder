@@ -22,7 +22,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -39,6 +40,14 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    applicationVariants.all {
+        val variant = this
+        variant.outputs.all {
+            val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            val fileName = "Stochapop-${variant.name}-${variant.versionName}.apk"
+            output.outputFileName = fileName
+        }
     }
 }
 
