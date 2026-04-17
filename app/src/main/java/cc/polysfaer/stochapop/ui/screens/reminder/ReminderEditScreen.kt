@@ -408,23 +408,10 @@ fun OptionChip(
     iconOn:  @Composable (() -> Unit)? = null,
     iconOff:  @Composable (() -> Unit)? = null
 ) {
-//    var selected by remember { mutableStateOf(false) }
-
     FilterChip(
-        onClick = onClick, //{ selected = !selected },
+        onClick = onClick,
         label = { Text(label) },
-        selected = value, //selected,
-//        leadingIcon = if (selected) {
-//            {
-//                Icon(
-//                    imageVector = Icons.Filled.Done,
-//                    contentDescription = "Done icon",
-//                    modifier = Modifier.size(FilterChipDefaults.IconSize)
-//                )
-//            }
-//        } else {
-//            null
-//        },
+        selected = value,
         trailingIcon = if (value) iconOn else iconOff,
     )
 }
