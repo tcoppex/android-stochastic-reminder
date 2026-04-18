@@ -15,7 +15,8 @@ _Stochastic Reminder_ is an Android application to schedule weekly fixed and ran
 - Specify both the title and long-form multiline message,
 - Availables with sound, vibration, both or none,
 - Exact alarm for non silent notifications.
-- Battery preserving scheduling on silent notifications.
+- Battery preserving scheduling on silent notifications,
+- Support localization for French 🇫🇷, Italian 🇮🇹, Spanish 🇪🇸 and German 🇩🇪.
 
 ## Preview
 
