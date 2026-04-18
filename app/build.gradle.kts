@@ -45,7 +45,7 @@ android {
         val variant = this
         variant.outputs.all {
             val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            val fileName = "Stochapop-${variant.name}-${variant.versionName}.apk"
+            val fileName = "Stochapop-${variant.name}-v${variant.versionName}.apk"
             output.outputFileName = fileName
         }
     }
@@ -68,18 +68,8 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.core.splashscreen)
     ksp(libs.androidx.room.compiler)
-
-//    testImplementation(libs.junit)
-//    androidTestImplementation(libs.androidx.runner)
-//    androidTestImplementation(libs.androidx.rules)
-//    androidTestImplementation(libs.androidx.junit)
-//    androidTestImplementation(libs.androidx.espresso.core)
-//    androidTestImplementation(platform(libs.androidx.compose.bom))
-//    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
