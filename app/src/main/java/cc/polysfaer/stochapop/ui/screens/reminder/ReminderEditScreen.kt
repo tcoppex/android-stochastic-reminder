@@ -262,6 +262,7 @@ fun EditScreenContent(
                 sendNotification(
                     context = context,
                     reminder = reminder.toReminder(), //
+                    backToActivityOnClick = false
                 )
             },
             icon = { Icon(

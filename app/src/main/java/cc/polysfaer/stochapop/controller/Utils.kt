@@ -31,7 +31,8 @@ fun sendNotification(
     summaryNotificationId: Int,
     groupKey: String,
     channelId: String = AppNotificationChannels.getDefaultChannelId(),
-    notificationId: Int = System.currentTimeMillis().toInt()
+    notificationId: Int = System.currentTimeMillis().toInt(),
+    backToActivityOnClick: Boolean = true
 ) {
     /* Handle click on notification launching the App's activity. */
     val intent = Intent(context, MainActivity::class.java).apply {
@@ -52,14 +53,14 @@ fun sendNotification(
         .setCategory(NotificationCompat.CATEGORY_ALARM)
         .setAutoCancel(true)
         .setGroup(groupKey)
-        .setContentIntent(pendingIntent)
+        .setContentIntent(if (backToActivityOnClick) pendingIntent else null)
 
     val summaryNotification = NotificationCompat.Builder(context, channelId)
         .setSmallIcon(R.drawable.ic_reminder_notification)
         .setGroup(groupKey)
         .setGroupSummary(true)
         .setAutoCancel(true)
-        .setContentIntent(pendingIntent)
+        .setContentIntent(if (backToActivityOnClick) pendingIntent else null)
         .build()
 
     with(NotificationManagerCompat.from(context)) {
@@ -72,7 +73,8 @@ fun sendNotification(
 
 fun sendNotification(
     context: Context,
-    reminder: Reminder
+    reminder: Reminder,
+    backToActivityOnClick: Boolean = true
 ) {
     val summaryNotificationId = reminder.id
 
@@ -86,5 +88,6 @@ fun sendNotification(
             hasSound = reminder.hasSound,
             hasVibration = reminder.hasVibration,
         ),
+        backToActivityOnClick = backToActivityOnClick
     )
 }
