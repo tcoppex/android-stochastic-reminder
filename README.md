@@ -1,6 +1,6 @@
 ![Android Version](https://img.shields.io/badge/Android-10%2B-3DDC84?style=flat-square&logo=android&logoColor=white)
 ![SDK](https://img.shields.io/badge/API-29%2B-blue?style=flat-square)
-![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square)
+[![GPL-3.0-only](https://img.shields.io/badge/License-GPL--3.0--only-blue.svg)](https://spdx.org/licenses/GPL-3.0-only.html)
 
 ![](fastlane/metadata/android/en-US/images/featureGraphic.png)
 
