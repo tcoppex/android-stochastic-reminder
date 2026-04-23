@@ -348,7 +348,7 @@ fun ReminderCard(
             .combinedClickable(
                 onClick = onClick,
                 onDoubleClick = onDoubleClick,
-//                onLongClick = onLongClick,
+                onLongClick = onLongClick,
             )
         ,
         shape = MaterialTheme.shapes.extraSmall,
@@ -437,7 +437,6 @@ fun ReminderCard(
                     modifier = Modifier
                         .padding(start = 12.dp, end = 4.dp, top = 6.dp, bottom = 6.dp),
                     style = MaterialTheme.typography.bodyMedium,
-//                    fontStyle = FontStyle.Italic
                 )
             }
         }
@@ -449,9 +448,10 @@ fun ReminderCard(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
+    val context = LocalContext.current
     StochaPopTheme {
         HomeScreenContent(
-            reminderList = DataSource.reminderList,
+            reminderList = DataSource.getReminders(context),
             onAddReminder = {},
             onEditReminder = {},
             onToggleReminder = {},

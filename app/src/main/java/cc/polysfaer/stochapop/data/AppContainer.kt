@@ -14,9 +14,6 @@ interface AppContainer {
 
     /* Manage the alarms scheduler. */
     val schedulerRepository: SchedulerRepository
-
-    /* Manage the Workers for notifications. */
-//    val workerRepository: WorkerRepository
 }
 
 enum class AppSettingsName(val key: String) {
