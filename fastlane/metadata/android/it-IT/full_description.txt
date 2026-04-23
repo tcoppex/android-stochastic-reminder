@@ -2,11 +2,11 @@ Crea e gestisci promemoria con notifiche personalizzate.
 
 <b>Funzionalità</b>
 
-* Pianifica notifiche settimanali fisse e casuali,
-* Attiva le notifiche in giorni specifici della settimana,
-* Specifica sia il titolo che il messaggio esteso su più righe,
-* Raggruppa le notifiche dello stesso promemoria per evitare confusione,
-* Specifica il tipo di allarme: suono, vibrazione, entrambi o silenzioso,
-* Utilizza l'allarme esatto per le notifiche non silenziose,
-* Utilizza la pianificazione a risparmio energetico per le notifiche silenziose,
-* Localizzazioni disponibili per francese, italiano, spagnolo e tedesco.
+• Pianifica notifiche settimanali fisse e casuali
+• Attiva le notifiche in giorni specifici della settimana
+• Specifica sia il titolo che il messaggio esteso su più righe
+• Raggruppa le notifiche dello stesso promemoria per evitare confusione
+• Specifica il tipo di allarme: suono, vibrazione, entrambi o silenzioso
+• Utilizza l'allarme esatto per le notifiche non silenziose
+• Utilizza la pianificazione a risparmio energetico per le notifiche silenziose
+• Supporta francese, inglese, italiano, spagnolo e tedesco

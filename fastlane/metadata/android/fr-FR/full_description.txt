@@ -1,12 +1,12 @@
 Créez et gérez des notifications fixes et aléatoires personnalisées.
 
-<b>Fonctionnalitées</b>
+<b>Fonctionnalités</b>
 
-* Programmez des notifications fixes ou aléatoires sur des plages allant jusqu'à 48h,
-* Déclenchement sur des jours spécifiques de la semaine,
-* Définissez un titre ainsi qu'un message multiligne détaillé,
-* Regroupez les notifications d'un même rappel pour éviter l'encombrement,
-* Précisez le type d'alarme : sonore, vibreur, les deux ou silencieux,
-* Utilisez des alarmes exactes pour les notifications non silencieuses,
-* Utilisez une programmation économe en batterie pour les notifications silencieuses,
-* Traductions disponibles en français, italien, espagnol et allemand.
+• Programmez des notifications fixes ou aléatoires sur des plages allant jusqu'à 48h
+• Déclenchement sur des jours spécifiques de la semaine
+• Personalisez de titre et de message détaillé
+• Précisez un type d'alarme : sonore, vibreur, les deux à la fois ou silencieux
+• Regroupe les notifications d'un même rappel pour éviter l'encombrement
+• Utilise des alarmes exactes pour les notifications non silencieuses
+• Utilise une programmation économe en batterie pour les notifications silencieuses
+• Supporte le français, l'anglais, l'italien, l'espagnol et l'allemand

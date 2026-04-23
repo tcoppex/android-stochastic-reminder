@@ -1,12 +1,12 @@
 Crea y gestiona recordatorios con notificaciones personalizadas.
 
-<b>Features</b>
+<b>Características</b>
 
-* Programa notificaciones fijas y aleatorias en rangos,
-* Activación en días específicos de la semana,
-* Especifica tanto el título como el mensaje multilínea de formato largo,
-* Agrupa las notificaciones de un mismo recordatorio para evitar el desorden,
-* Especifica el tipo de alarma: sonido, vibración, ambos o silencio,
-* Usa alarmas exactas para notificaciones no silenciadas,
-* Usa una programación que ahorra batería en las notificaciones silenciadas,
-* Traducciones disponibles para francés, italiano, español y alemán.
+• Programa notificaciones fijas y aleatorias en rangos
+• Activación en días específicos de la semana
+• Especifica tanto el título como el mensaje multilínea de formato largo
+• Agrupa las notificaciones de un mismo recordatorio para evitar el desorden
+• Especifica el tipo de alarma: sonido, vibración, ambos o silencio
+• Usa alarmas exactas para notificaciones no silenciadas
+• Usa una programación que ahorra batería en las notificaciones silenciadas
+• Soporta francés, inglés, italiano, español y alemán

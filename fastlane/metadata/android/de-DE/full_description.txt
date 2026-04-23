@@ -2,11 +2,11 @@ Erstellen und Verwalten von Erinnerungen mit benutzerdefinierten Benachrichtigun
 
 <b>Features</b>
 
-* Planen Sie feste und zufällige Benachrichtigungen in Zeiträumen,
-* Auslösung an bestimmten Wochentagen,
-* Legen Sie sowohl den Titel als auch eine mehrzeilige Nachricht fest,
-* Gruppieren Sie Benachrichtigungen derselben Erinnerung, um Unordnung zu vermeiden,
-* Bestimmen Sie den Alarmtyp: Ton, Vibration, beides oder stummgeschaltet,
-* Verwendung exakter Alarme für nicht stummgeschaltete Benachrichtigungen,
-* Akkuschonende Planung bei stummgeschalteten Benachrichtigungen,
-* Lokalisierungen für Französisch, Italienisch, Spanisch und Deutsch verfügbar.
+• Planen Sie feste und zufällige Benachrichtigungen in Zeiträumen
+• Auslösung an bestimmten Wochentagen
+• Legen Sie sowohl den Titel als auch eine mehrzeilige Nachricht fest
+• Gruppieren Sie Benachrichtigungen derselben Erinnerung, um Unordnung zu vermeiden
+• Bestimmen Sie den Alarmtyp: Ton, Vibration, beides oder stummgeschaltet
+• Verwendung exakter Alarme für nicht stummgeschaltete Benachrichtigungen
+• Akkuschonende Planung bei stummgeschalteten Benachrichtigungen
+• Unterstützt Französisch, Englisch, Italienisch, Spanisch und Deutsch
