@@ -2,9 +2,11 @@
 <resources>
     <string name="edit_screen_name">Erinnerung bearbeiten</string>
     <string name="new_screen_name">Neue Erinnerung</string>
+    <string name="top_bar_arrow_desc">Zurück</string>
     <string name="home_btn_add">Erinnerung hinzufügen</string>
-    <string name="edit_enable_label">Aktivieren</string>
     <string name="use_random_range_label">Zufälliger Bereich</string>
+    <string name="edit_reminder_default_title">Erinnerung</string>
+    <string name="edit_enable_label">Aktivieren</string>
     <string name="edit_time_label">Zeit</string>
     <string name="edit_days_selection_label">Wochentage</string>
     <string name="edit_save_btn">Speichern</string>
@@ -19,10 +21,16 @@
     <string name="edit_reminder_title">Titel</string>
     <string name="delete_reminder_confirmation_title">Erinnerung löschen</string>
     <string name="delete_reminder_confirmation_message">Sind Sie sicher, dass Sie diese Erinnerung löschen möchten?</string>
-    <string name="top_bar_arrow_desc">Zurück</string>
     <string name="edit_cancel_btn">Abbrechen</string>
     <string name="day_selection_toast">Es muss mindestens ein Tag ausgewählt sein.</string>
     <string name="edit_label_alarm_type">Alarmtyp</string>
     <string name="edit_alarm_type_sound">Klang</string>
     <string name="edit_alarm_type_vibration">Vibration</string>
+    <string name="tuto_1_title">Grundlagen</string>
+    <string name="tuto_1_message">- Einmal tippen zum Bearbeiten,\n- Zweimal tippen zum Aktivieren/Deaktivieren,\n- Nach links wischen zum Löschen.</string>
+    <string name="tuto_2_title">Zufällige Zeitspannen</string>
+    <string name="tuto_2_message">Verwenden Sie eine Zeitspanne, um Benachrichtigungen zufällig zu verteilen.\n\nWenn eine Zeitspanne zwei Tage überschneidet, wird der Starttag als Auslösetag für den gesamten Zeitraum verwendet.</string>
+    <string name="tuto_3_title">Cooler Tipp</string>
+    <string name="tuto_3_message">Stumme Benachrichtigungen verbrauchen weniger Akku</string>
+    <string name="tuto_4_title">Danke!</string>
 </resources>

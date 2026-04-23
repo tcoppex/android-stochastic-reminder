@@ -12,19 +12,23 @@ import cc.polysfaer.stochapop.ui.screens.reminder.ReminderEditViewModel
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            val appContainer = mainApplication().container
+            val app = mainApplication()
+            val appContainer = app.container
 
             HomeViewModel(
+                app,
                 appContainer.remindersRepository,
                 appContainer.schedulerRepository,
                 appContainer.prefs
             )
         }
         initializer {
-            val appContainer = mainApplication().container
+            val app = mainApplication()
+            val appContainer = app.container
 
             ReminderEditViewModel(
                 this.createSavedStateHandle(),
+                app,
                 appContainer.remindersRepository,
                 appContainer.schedulerRepository
             )

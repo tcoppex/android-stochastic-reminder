@@ -25,4 +25,12 @@
     <string name="edit_label_alarm_type">Type d\'alarme</string>
     <string name="edit_alarm_type_sound">Son</string>
     <string name="edit_alarm_type_vibration">Vibration</string>
+    <string name="tuto_1_title">Les Bases</string>
+    <string name="tuto_1_message">- Appuyez une fois pour modifier,\n- Appuyez deux fois pour activer/désactiver,\n- Balayez vers la gauche pour supprimer.</string>
+    <string name="tuto_2_title">Plages Aléatoires</string>
+    <string name="tuto_2_message">Utilisez une plage horaire pour répartir les notifications de manière aléatoire.\n\nLorsqu\'une plage chevauche deux jours, le jour de début est utilisé comme jour déclencheur pour toute la période.</string>
+    <string name="tuto_3_title">Astuce de Goupil</string>
+    <string name="tuto_3_message">Les notifications silencieuses économisent de la batterie</string>
+    <string name="tuto_4_title">Merci!</string>
+    <string name="edit_reminder_default_title">Rappel</string>
 </resources>

@@ -1,5 +1,6 @@
 package cc.polysfaer.stochapop.ui.screens.home
 
+import android.app.Application
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
@@ -21,6 +22,7 @@ data class HomeUiState(
 
 /* ViewModel to retrieve all items in the Room Database. */
 class HomeViewModel(
+    private val application: Application,
     private val remindersRepository: RemindersRepository,
     private val schedulerRepository: SchedulerRepository,
     private val sharedPreference: SharedPreferences
@@ -41,11 +43,13 @@ class HomeViewModel(
     private fun initializeOnFirstRun() {
         val isFirstRun = sharedPreference.getBoolean(AppSettingsName.IS_FIRST_RUN.key, true)
 
+        val reminderList = DataSource.getReminders(application)
+
         if (isFirstRun) {
             viewModelScope.launch {
-              if (false) {
+              if (true) {
                   // Fill the DB with the DataSource (to be exported).
-                  DataSource.reminderList.forEach {
+                  reminderList.forEach {
                       remindersRepository.insertReminder(it)
                       if (it.enabled) {
                           schedulerRepository.scheduleReminderAlarms(it)
@@ -53,7 +57,7 @@ class HomeViewModel(
                   }
               } else {
                   // Only fill the DB with the last DataSource record.
-                  val ps = DataSource.reminderList.last()
+                  val ps = reminderList.last()
                   remindersRepository.insertReminder(ps)
                   if (ps.enabled) {
                       schedulerRepository.scheduleReminderAlarms(ps)

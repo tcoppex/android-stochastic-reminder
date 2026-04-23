@@ -26,4 +26,12 @@
     <string name="edit_label_alarm_type">Alarm type</string>
     <string name="edit_alarm_type_sound">Sound</string>
     <string name="edit_alarm_type_vibration">Vibration</string>
+    <string name="tuto_1_message">- Single tap to edit,\n- Double tap to enable/disable,\n- Left swipe to delete.</string>
+    <string name="tuto_1_title">The Basics</string>
+    <string name="tuto_2_title">Random Ranges</string>
+    <string name="tuto_2_message">Use a time range to spread notifications randomly.\n\nWhen a time range overlap two days, the starting day is used as the triggering day for the whole range.</string>
+    <string name="tuto_3_title">Cool Tip</string>
+    <string name="tuto_3_message">Muted notifications use less battery</string>
+    <string name="tuto_4_title">Thank you!</string>
+    <string name="edit_reminder_default_title">Reminder</string>
 </resources>

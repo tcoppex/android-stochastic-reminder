@@ -17,6 +17,7 @@
     <string name="permission_required_message">Debes habilitar las notificaciones para usar esta aplicación.</string>
     <string name="edit_reminder_text">Mensaje</string>
     <string name="edit_reminder_title">Título</string>
+    <string name="edit_reminder_default_title">Recordatorio</string>
     <string name="delete_reminder_confirmation_title">Eliminar recordatorio</string>
     <string name="delete_reminder_confirmation_message">¿Estás seguro de que quieres eliminar este recordatorio?</string>
     <string name="top_bar_arrow_desc">Atrás</string>
@@ -25,4 +26,11 @@
     <string name="edit_label_alarm_type">Tipo de alarma</string>
     <string name="edit_alarm_type_sound">Sonido</string>
     <string name="edit_alarm_type_vibration">Vibración</string>
+    <string name="tuto_1_title">Lo Básico</string>
+    <string name="tuto_1_message">- Toca una vez para editar,\n- Toca dos veces para activar/desactivar,\n- Desliza a la izquierda para eliminar.</string>
+    <string name="tuto_2_title">Rangos Aleatorios</string>
+    <string name="tuto_2_message">Usa un rango de tiempo para distribuir las notificaciones de forma aleatoria.\n\nCuando un rango abarca dos días, el día de inicio se utiliza como el día de activación para todo el periodo.</string>
+    <string name="tuto_3_title">Consejo útil</string>
+    <string name="tuto_3_message">Las notificaciones silenciadas consumen menos batería</string>
+    <string name="tuto_4_title">¡Gracias!</string>
 </resources>

@@ -1,11 +1,13 @@
 package cc.polysfaer.stochapop.ui.screens.reminder
 
+import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import cc.polysfaer.stochapop.R
 import cc.polysfaer.stochapop.controller.broadcast.SchedulerRepository
 import cc.polysfaer.stochapop.data.reminder.RemindersRepository
 import kotlinx.coroutines.flow.filterNotNull
@@ -19,13 +21,17 @@ import java.time.LocalTime
  **/
 class ReminderEditViewModel(
     savedStateHandle: SavedStateHandle,
+    private val application: Application,
     private val remindersRepository: RemindersRepository,
     private val schedulerRepository: SchedulerRepository,
 ) : ViewModel() {
     val reminderId: Int = savedStateHandle[EditReminderDestination.REMINDER_ID_ARG] ?: -1
     val isEditMode: Boolean = reminderId != -1
 
-    var uiState by mutableStateOf(ReminderEditUIState(initialLoadDone = !isEditMode))  // switch to FlowState?
+    var uiState by mutableStateOf(ReminderEditUIState(
+        reminderDetails = ReminderDetails(title = application.getString(R.string.edit_reminder_default_title)),
+        initialLoadDone = !isEditMode
+    ))  // switch to FlowState?
         private set
 
     init {
