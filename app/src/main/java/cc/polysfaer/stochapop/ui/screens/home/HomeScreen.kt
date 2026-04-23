@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -318,6 +319,19 @@ fun CardInfoText(
 }
 
 @Composable
+fun AlarmIcon(
+    @DrawableRes id: Int,
+    contentDescription: String?,
+    modifier: Modifier = Modifier
+) {
+    Icon(
+        painter = painterResource(id),
+        contentDescription = contentDescription,
+        modifier = modifier.size(14.dp)
+    )
+}
+
+@Composable
 fun ReminderCard(
     reminder: Reminder,
     modifier: Modifier = Modifier,
@@ -400,22 +414,20 @@ fun ReminderCard(
                         )
                     }
 
-                    if (!reminder.hasSound || !reminder.hasVibration) {
-                        Spacer(modifier = Modifier.padding(horizontal = 5.dp))
+                    Spacer(modifier = Modifier.padding(horizontal = 5.dp))
 
-                        val res = if (reminder.hasVibration) {
-                            R.drawable.mobile_vibrate_24px
-                        } else if (reminder.hasSound) {
-                            R.drawable.volume_up_24px
-                        } else {
-                            R.drawable.volume_off_24px
+                    if (!reminder.hasSound && !reminder.hasVibration) {
+                        AlarmIcon(R.drawable.volume_off_24px, "no alarm")
+                    } else {
+                        if (reminder.hasSound) {
+                            AlarmIcon(R.drawable.volume_up_24px, "sound alarm")
+                            Spacer(modifier = Modifier.padding(horizontal = 2.dp))
                         }
-                        Icon(
-                            painter = painterResource(id = res),
-                            contentDescription = "alarm type icon",
-                            modifier = Modifier.size(14.dp)
-                        )
+                        if (reminder.hasVibration) {
+                            AlarmIcon(R.drawable.mobile_vibrate_24px, "vibration alarm")
+                        }
                     }
+
                 }
 
                 // -----------------------
