@@ -1,5 +1,5 @@
 ![Android Version](https://img.shields.io/badge/Android-10%2B-3DDC84?style=flat-square&logo=android&logoColor=white)
-[![License](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![GPL-3.0-only](https://img.shields.io/badge/License-GPL--3.0--only-blue.svg)](https://spdx.org/licenses/GPL-3.0-only.html)
 [![version](https://img.shields.io/github/release/tcoppex/stochastic-reminder.svg?logo=github)](https://github.com/tcoppex/stochastic-reminder/releases)
 [![f-droid](https://img.shields.io/f-droid/v/cc.polysfaer.stochapop.svg?logo=F-Droid)](https://f-droid.org/packages/cc.polysfaer.stochapop)
 
@@ -37,7 +37,7 @@ _Stochastic Reminder_ is an Android application to schedule weekly fixed and ran
 
 ## License
 
-_Stochastic Reminder_ is a _Libre Software_ released under the **GNU General Public License v3.0**.
+_Stochastic Reminder_ is a _Libre Software_ released under the **GNU General Public License v3.0 only**.
 
 [<img src="https://f-droid.org/badge/get-it-on.png" alt="Available on F-Droid" height="80">](https://f-droid.org/packages/cc.polysfaer.stochapop)
 <!-- [<img src="https://www.paulkingsnorth.net/s/writers-against-AI-logos_WRITERS-AGAINST-AI-1.png" width="80" alt="against AI" />](https://www.writersagainstai.net/essay) -->
