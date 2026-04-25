@@ -68,7 +68,11 @@ class SchedulerRepository(
                 reminder.startTime,
                 reminder.selectedDays
             )
-            scheduleNotificationAlarm(reminder.id, startTriggerTime, useExact = useExact)
+            scheduleNotificationAlarm(
+                reminder.id,
+                startTriggerTime,
+                useExact = useExact
+            )
         }
     }
 
@@ -80,7 +84,7 @@ class SchedulerRepository(
             reminder.selectedDays
         )
 
-        val useExact = reminder.hasVibration || reminder.hasSound
+        val useExact = shouldUseExactAlarm(reminder)
 
         if (reminder.useRandomRange) {
             val localTimeSegment = getTimeSegmentInMinutes(
@@ -96,7 +100,11 @@ class SchedulerRepository(
                 useExact
             )
         } else {
-            scheduleNotificationAlarm(reminder.id, startTriggerTime, useExact = useExact)
+            scheduleNotificationAlarm(
+                reminder.id,
+                startTriggerTime,
+                useExact = useExact
+            )
         }
     }
 
@@ -206,8 +214,8 @@ class SchedulerRepository(
         val now = LocalDateTime.now()
         return generateSequence(triggerTime) { it.plusDays(1) }
             .first {
-                selectedDays.contains(it.dayOfWeek)
-                        && it.plusMinutes(minuteOffset).isAfter(now)
+                   selectedDays.contains(it.dayOfWeek)
+                && it.plusMinutes(minuteOffset).isAfter(now)
             }
     }
 
