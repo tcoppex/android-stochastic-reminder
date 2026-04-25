@@ -1,5 +1,6 @@
 package cc.polysfaer.stochapop.ui.screens.reminder
 
+import android.net.Uri
 import cc.polysfaer.stochapop.data.reminder.Reminder
 import java.time.DayOfWeek
 import java.time.LocalTime
@@ -29,15 +30,14 @@ data class ReminderDetails(
     val useRandomRange: Boolean = true,
     val hasSound: Boolean = true,
     val hasVibration: Boolean = false,
+    val soundUri: Uri? = null, // xxx (and use system default when null)
     val notificationCount: Int = ReminderEditSetting.DEFAULT_RANDOM_NOTIFICATION_COUNT,
     val startTime: LocalTime = getRoundLocalTime(1),
     val endTime: LocalTime = getRoundLocalTime(2),
     val selectedDays: Set<DayOfWeek> = DayOfWeek.entries.toSet(), //
 )
 
-fun getRoundLocalTime(hoursToAdd: Long): LocalTime {
-    return LocalTime.of(LocalTime.now().plusHours(hoursToAdd).hour, 0)
-}
+// ------------------------------------------------------------------------------------------------
 
 fun ReminderDetails.toReminder(): Reminder = Reminder(
     id = id,
@@ -46,11 +46,12 @@ fun ReminderDetails.toReminder(): Reminder = Reminder(
     enabled = enabled,
     hasSound = hasSound,
     hasVibration = hasVibration,
+    soundUri = soundUri,
     useRandomRange = useRandomRange,
     notificationCount = notificationCount,
     startTime = startTime,
     endTime = endTime,
-    selectedDays = selectedDays
+    selectedDays = selectedDays,
 )
 
 fun Reminder.toReminderDetail(): ReminderDetails = ReminderDetails(
@@ -60,6 +61,7 @@ fun Reminder.toReminderDetail(): ReminderDetails = ReminderDetails(
     enabled = enabled,
     hasSound = hasSound,
     hasVibration = hasVibration,
+    soundUri = soundUri,
     useRandomRange = useRandomRange,
     notificationCount = notificationCount,
     startTime = startTime,
@@ -72,3 +74,5 @@ fun Reminder.toReminderEditUIState(initialLoadDone: Boolean = true): ReminderEdi
     initialLoadDone = initialLoadDone,
     previousNotificationCount = notificationCount,
 )
+
+// ------------------------------------------------------------------------------------------------

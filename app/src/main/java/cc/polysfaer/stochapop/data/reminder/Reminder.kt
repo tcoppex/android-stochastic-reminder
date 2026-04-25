@@ -1,5 +1,6 @@
 package cc.polysfaer.stochapop.data.reminder
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
@@ -16,6 +17,7 @@ data class Reminder(
     val useRandomRange: Boolean,
     val hasSound: Boolean,
     val hasVibration: Boolean,
+    val soundUri: Uri?,                                     // stored as Text (String?)
     val notificationCount: Int,
     val startTime: LocalTime,                               // stored as Int (minutes of the day)
     val endTime: LocalTime,                                 // stored as Int (minutes of the day)
@@ -51,41 +53,21 @@ class ReminderDayConverter {
     @TypeConverter
     fun toSelectedDayBitmask(selectedDays: Set<DayOfWeek>?): Int? {
         return selectedDays?.let {
-            selectedDays.fold(0, {curr, day ->
+            selectedDays.fold(0) { curr, day ->
                 curr or (1 shl (DayOfWeek.entries.indexOf(day)))
-            })
+            }
         }
     }
 }
 
-/*
-object LocalTimeSerializer : KSerializer<LocalTime> {
-    private val converter = ReminderTimeConverter()
-    override val descriptor = PrimitiveSerialDescriptor("LocalTime", PrimitiveKind.INT)
-
-    override fun serialize(encoder: Encoder, value: LocalTime) {
-        val minutes = converter.toMinutesOfDay(value) ?: 0
-        encoder.encodeInt(minutes)
+class ReminderUriConverter {
+    @TypeConverter
+    fun fromUri(uri: Uri?): String? {
+        return uri?.toString()
     }
 
-    override fun deserialize(decoder: Decoder): LocalTime {
-        val minutes = decoder.decodeInt()
-        return converter.fromMinutesOfDay(minutes) ?: LocalTime.MIDNIGHT
+    @TypeConverter
+    fun toUri(uriString: String?): Uri? {
+        return uriString?.let { Uri.parse(it) }
     }
 }
-
-object DayOfWeekSetSerializer : KSerializer<Set<DayOfWeek>> {
-    private val converter = ReminderDayConverter()
-    override val descriptor = PrimitiveSerialDescriptor("DayOfWeekSet", PrimitiveKind.INT)
-
-    override fun serialize(encoder: Encoder, value: Set<DayOfWeek>) {
-        val mask = converter.toSelectedDayBitmask(value) ?: 0
-        encoder.encodeInt(mask)
-    }
-
-    override fun deserialize(decoder: Decoder): Set<DayOfWeek> {
-        val mask = decoder.decodeInt()
-        return converter.fromSelectedDayBitmask(mask) ?: emptySet()
-    }
-}
-*/
