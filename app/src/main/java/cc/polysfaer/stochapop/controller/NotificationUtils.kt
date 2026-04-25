@@ -87,7 +87,7 @@ fun sendNotification(
     message: String,
     summaryNotificationId: Int,
     groupKey: String,
-    channelId: String = NotificationChannels.getDefaultChannelId(),
+    channelId: String = NotificationChannels.getDefaultChannelId(), //
     notificationId: Int = System.currentTimeMillis().toInt(),
     backToActivityOnClick: Boolean = true
 ) {
@@ -135,16 +135,21 @@ fun sendNotification(
 ) {
     val summaryNotificationId = reminder.id
 
+    /* Create the specific notification channel when needed. */
+    // TODO
+
     sendNotification(
         context = context,
         title = reminder.title,
         message = reminder.message,
         summaryNotificationId = summaryNotificationId,
         groupKey = "${context.getString(R.string.app_name)}_${summaryNotificationId}",
+        // -----------------------------------------------------------------
         channelId = NotificationChannels.getDefaultChannelId(
             hasSound = reminder.hasSound,
             hasVibration = reminder.hasVibration,
         ),
+        // -----------------------------------------------------------------
         backToActivityOnClick = backToActivityOnClick
     )
 }

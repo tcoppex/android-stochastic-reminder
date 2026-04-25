@@ -21,7 +21,13 @@ data class ReminderEditUIState(
     val previousNotificationCount: Int = 1,
 )
 
-// TODO? remove ReminderDetails to use Reminder directly.
+// ------------------------------------------------------------------------------------------------
+
+fun getRoundLocalTime(hoursToAdd: Long): LocalTime {
+    return LocalTime.of(LocalTime.now().plusHours(hoursToAdd).hour, 0)
+}
+
+// TODO? remove ReminderDetails to use Reminder directly, as they are basically the same (minus default values).
 data class ReminderDetails(
     val id: Int = 0,
 
