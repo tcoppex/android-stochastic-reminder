@@ -31,6 +31,6 @@
     <string name="tuto_2_message">Utilisez une plage horaire pour répartir les notifications de manière aléatoire.\n\nLorsqu\'une plage chevauche deux jours, le jour de début est utilisé comme jour déclencheur pour toute la période.</string>
     <string name="tuto_3_title">Astuce de Goupil</string>
     <string name="tuto_3_message">Les notifications silencieuses économisent de la batterie</string>
-    <string name="tuto_4_title">Merci!</string>
+    <string name="tuto_4_title">Merci !</string>
     <string name="edit_reminder_default_title">Rappel</string>
 </resources>
