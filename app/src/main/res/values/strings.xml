@@ -6,7 +6,7 @@
     <string name="home_btn_add">Add Reminder</string>
     <string name="edit_enable_label">Enable</string>
     <string name="time_mode_random_label">Random</string>
-    <string name="edit_time_label">Timetable</string>
+    <string name="edit_time_label">Time</string>
     <string name="edit_days_selection_label">Days of the week</string>
     <string name="edit_save_btn">Save</string>
     <string name="edit_test_btn">Test</string>
