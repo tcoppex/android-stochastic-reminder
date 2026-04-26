@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         // (we should enable dark mode if we want to force it to false)
         // window.isNavigationBarContrastEnforced = false
 
-        NotificationChannels.initialize(this)
+        //NotificationChannels.initialize(this)
 
         setContent {
             StochaPopTheme {

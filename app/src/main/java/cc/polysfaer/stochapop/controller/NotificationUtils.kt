@@ -1,6 +1,7 @@
 package cc.polysfaer.stochapop.controller
 
 import android.Manifest
+import android.R.attr.visibility
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -18,33 +19,9 @@ import androidx.core.content.ContextCompat
 import cc.polysfaer.stochapop.MainActivity
 import cc.polysfaer.stochapop.R
 import cc.polysfaer.stochapop.data.reminder.Reminder
+import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 
-// TODO: change for the notification channel to be created only on first use
-//      AND supress unused channels once a week or so.
-//
-// idea: create the notification channel via the sendNotification method (to handle the "Test" button)
-//      and everytime a new reminder is saved, if the number of distinct channel is beyond a threshold,
-//      we might destroy the extra channel not in use anymore.
-//
 object NotificationChannels {
-    fun getChannelId(
-        isUrgent: Boolean,
-        isPublic: Boolean,
-        hasSound: Boolean,
-        hasVibration: Boolean,
-    ): String {
-        val importanceStr = if (isUrgent) "URGENT" else "DEFAULT"
-        val visibilityStr = if (isPublic) "PUBLIC" else "PRIVATE"
-        val soundStr      = if (hasSound) "SOUND" else "NONE"
-        val vibrationStr  = if (hasVibration) "VIBRATION" else "NONE"
-        val id = "${importanceStr}_${visibilityStr}_${soundStr}_${vibrationStr}"
-        return id
-    }
-
-    fun getDefaultChannelId(hasSound: Boolean = true, hasVibration: Boolean = false): String = getChannelId(
-        isUrgent = true, isPublic = true, hasSound, hasVibration
-    )
-
     fun hasPostNotificationPermission(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ContextCompat.checkSelfPermission( context,
@@ -55,35 +32,66 @@ object NotificationChannels {
         }
     }
 
-    fun initialize(context: Context) {
+    fun getChannelId(
+        isUrgent: Boolean,
+        isPublic: Boolean,
+        hasSound: Boolean,
+        hasVibration: Boolean,
+        soundUri: Uri? = ReminderSettings.DEFAULT_NOTIFICATION_URI //
+    ): String {
+        val importanceStr = if (isUrgent) "URGENT" else "DEFAULT"
+        val visibilityStr = if (isPublic) "PUBLIC" else "PRIVATE"
+        val soundStr      = if (hasSound) "SOUND" else "NONE"
+        val vibrationStr  = if (hasVibration) "VIBRATION" else "NONE"
+
+        val soundHash = if (hasSound && (soundUri != null)) {
+            soundUri.toString().hashCode().coerceAtLeast(0)
+        } else {
+            "NONE"
+        }
+
+        val id = "${importanceStr}_${visibilityStr}_${soundStr}_${vibrationStr}_${soundHash}"
+        return id
+    }
+
+    fun createChannel(
+        context: Context,
+        isUrgent: Boolean,
+        isPublic: Boolean,
+        hasSound: Boolean,
+        hasVibration: Boolean,
+        soundUri: Uri?
+    ): String {
         val manager = context.getSystemService(NotificationManager::class.java)
 
-        val importances = listOf(NotificationManager.IMPORTANCE_HIGH, NotificationManager.IMPORTANCE_DEFAULT)
-        val visibilities = listOf(Notification.VISIBILITY_PUBLIC, Notification.VISIBILITY_PRIVATE)
-        val modes = listOf("SV", "S", "V", "0")
+        val channelId = getChannelId(
+            isUrgent,
+            isPublic,
+            hasSound,
+            hasVibration,
+            soundUri
+        )
 
-        val channels = mutableListOf<NotificationChannel>()
+        val importance = if (isUrgent) NotificationManager.IMPORTANCE_HIGH else NotificationManager.IMPORTANCE_DEFAULT
+        val visibility = if (isPublic) Notification.VISIBILITY_PUBLIC else Notification.VISIBILITY_PRIVATE
 
-        importances.forEach { importance ->
-            val isUrgent = (importance == NotificationManager.IMPORTANCE_HIGH)
-            visibilities.forEach { visibility ->
-                val isPublic = (visibility == Notification.VISIBILITY_PUBLIC)
-                modes.forEach { mode ->
-                    val hasSound = mode.first() == 'S'
-                    val hasVibration = mode.last() == 'V'
-                    val id = getChannelId(isUrgent, isPublic, hasSound, hasVibration)
-                    val channel = NotificationChannel(id, "Channel $id", importance).apply {
-                        lockscreenVisibility = visibility
-                        enableVibration(hasVibration)
-                        if (!hasSound) setSound(null, null)
-                    }
-                    channels.add(channel)
-                }
+        val channel = NotificationChannel(channelId, "Channel $channelId", importance).apply {
+            lockscreenVisibility = visibility
+            enableVibration(hasVibration)
+            if (hasSound) {
+                setSound(soundUri, null)
+            } else {
+                setSound(null, null)
             }
         }
-        manager.createNotificationChannels(channels)
+
+        manager.createNotificationChannel(channel)
+
+        return channelId
     }
 }
+
+// ------------------------------------------------------------------------------------------------
 
 fun openAppSettings(context: Context) {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -99,7 +107,7 @@ fun sendNotification(
     message: String,
     summaryNotificationId: Int,
     groupKey: String,
-    channelId: String = NotificationChannels.getDefaultChannelId(), //
+    channelId: String,
     notificationId: Int = System.currentTimeMillis().toInt(),
     backToActivityOnClick: Boolean = true
 ) {
@@ -147,8 +155,16 @@ fun sendNotification(
 ) {
     val summaryNotificationId = reminder.id
 
-    /* Create the specific notification channel when needed. */
-    // TODO
+    /* Create the specific notification channel as needed. */
+    // TODO: probably overkill, and don't even garbage collect unused channels.
+    val channelId = NotificationChannels.createChannel(
+        context = context,
+        isUrgent = true, //
+        isPublic = true, //
+        hasSound = reminder.hasSound,
+        hasVibration = reminder.hasVibration,
+        soundUri = reminder.soundUri
+    )
 
     sendNotification(
         context = context,
@@ -156,12 +172,7 @@ fun sendNotification(
         message = reminder.message,
         summaryNotificationId = summaryNotificationId,
         groupKey = "${context.getString(R.string.app_name)}_${summaryNotificationId}",
-        // -----------------------------------------------------------------
-        channelId = NotificationChannels.getDefaultChannelId(
-            hasSound = reminder.hasSound,
-            hasVibration = reminder.hasVibration,
-        ),
-        // -----------------------------------------------------------------
+        channelId = channelId,
         backToActivityOnClick = backToActivityOnClick
     )
 }
