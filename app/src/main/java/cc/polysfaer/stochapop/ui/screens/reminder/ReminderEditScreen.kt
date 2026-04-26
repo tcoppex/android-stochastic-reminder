@@ -1007,7 +1007,6 @@ fun DaySelectionRow(
 
 // ------------------------------------------------------------------------------------------------
 
-
 @Composable
 fun SoundSelectRow(
     currentSoundUri: Uri?,
@@ -1015,18 +1014,36 @@ fun SoundSelectRow(
     enabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
 
-    // XXX (TEST)
-    // Can be incorrect if the user has defined SILENT as the defaut ringtone
+    val ringtoneName = RingtoneManager
+        .getRingtone(context, currentSoundUri)
+        .getTitle(context)
 
-//    if (currentSoundUri == null) {
-//        val defaultUri: Uri? = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-//        onSoundSelected(defaultUri)
-//    }
+    // TODO: check special case where user defined SILENT as default Ringtone in their system.
+    //if (currentSoundUri == null) {
+    //    val defaultUri: Uri? = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+    //    onSoundSelected(defaultUri)
+    //}
 
     //---------
 
-    val context = LocalContext.current
+    /* System's Ringtone Picker launcher. */
+
+    val ringtoneSelectionTitle = stringResource(R.string.ringtone_selection_title)
+
+    // Note: we only authorize system ringtones to be accessed, if we would need user-defined ones we'll need
+    // the READ_EXTERNAL_STORAGE permission and request a persistable URI via takePersistableUriPermission
+    // to use it after reboot.
+    val intent = remember(currentSoundUri) {
+        Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+            putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
+            putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, ringtoneSelectionTitle)
+            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
+            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
+            putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentSoundUri)
+        }
+    }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -1043,36 +1060,12 @@ fun SoundSelectRow(
         }
     }
 
-    val ringtoneSelectionTitle = stringResource(R.string.ringtone_selection_title)
-
-    val intent = remember(currentSoundUri) {
-        Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
-            putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
-            putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, ringtoneSelectionTitle)
-
-            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
-
-            // XXX TODO?
-            // the silent ringtone is considered to be at null, same value used
-            // to detect the default ringtone.
-            putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true) //
-
-            val uriToSelect = currentSoundUri ?: Settings.System.DEFAULT_NOTIFICATION_URI
-            putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, uriToSelect)
-        }
-    }
-
-    val ringtone = RingtoneManager.getRingtone(context, currentSoundUri)
-    val ringtoneName = ringtone.getTitle(context)
-
-    // Note: we only authorize system sound to be accessed, if we need user defined sound we'll need
-    // the READ_EXTERNAL_STORAGE permission and be grant a persistable URI via takePersistableUriPermission
-    // to use it after reboot.
-
     //---------
 
     Row(
-        modifier = modifier.fillMaxWidth().graphicsLayer(alpha = if (enabled) 1.0f else 0.5f),
+        modifier = modifier
+            .fillMaxWidth()
+            .graphicsLayer(alpha = if (enabled) 1.0f else 0.5f),
         verticalAlignment = Alignment.CenterVertically
     ) {
         LabelText(
