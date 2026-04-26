@@ -11,9 +11,12 @@ val SpaceCrabbyRed = Color(0xFFE76145)
 
 // -------------------------------------------------------
 
-//val OffWhiteUpper = Color(0xFFE8E4E4)
-//val SplashScreenSand = Color(0xFFE3C9A3)
-//val BackgroundColor = OffWhiteUpper //
+val DarkSalmon = Color(0xFFE9967A) //
+val OffWhiteUpper = Color(0xFFE8E4E4)
+val SplashScreenSand = Color(0xFFE3C9A3)
+val SplashScreenSandLight = Color(0xFFF6F4F0)
+
+val BackgroundColor = SplashScreenSandLight //
 
 // -------------------------------------------------------
 
