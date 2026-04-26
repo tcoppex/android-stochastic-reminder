@@ -17,7 +17,7 @@ import cc.polysfaer.stochapop.data.reminder.ReminderUriConverter
 @Database(
     entities = [Reminder::class],
     version = 2,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(
     ReminderTimeConverter::class,

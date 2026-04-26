@@ -1,7 +1,6 @@
 package cc.polysfaer.stochapop.controller
 
 import android.Manifest
-import android.R.attr.visibility
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
