@@ -9,7 +9,7 @@ import java.time.LocalTime
 // ------------------------------------------------------------------------------------------------
 
 data class ReminderEditUIState(
-    val reminderDetails: ReminderDetails = ReminderDetails(), //
+    val reminderDetails: ReminderDetails, //
     val initialLoadDone: Boolean = false,
     val previousNotificationCount: Int = ReminderSettings.defaultRandomNotificationCount,
 )
@@ -24,7 +24,7 @@ fun getRoundLocalTime(hoursToAdd: Long): LocalTime {
 data class ReminderDetails(
     val id: Int = 0,
 
-    val title: String = "Reminder",
+    val title: String,  // a localized default value should be provided on creation..
     val message: String = "",
     val enabled: Boolean = true,
     val useRandomRange: Boolean = true,
@@ -34,7 +34,7 @@ data class ReminderDetails(
     val notificationCount: Int = ReminderSettings.defaultRandomNotificationCount,
     val startTime: LocalTime = getRoundLocalTime(1),
     val endTime: LocalTime = getRoundLocalTime(2),
-    val selectedDays: Set<DayOfWeek> = DayOfWeek.entries.toSet(), //
+    val selectedDays: Set<DayOfWeek> = DayOfWeek.entries.toSet(),
 )
 
 // ------------------------------------------------------------------------------------------------

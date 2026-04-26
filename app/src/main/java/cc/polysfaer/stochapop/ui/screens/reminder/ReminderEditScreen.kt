@@ -229,9 +229,9 @@ fun ReminderEditScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditScreenContent(
+    uiState: ReminderEditUIState,
     modifier: Modifier = Modifier,
     isEditMode: Boolean = true,
-    uiState: ReminderEditUIState = ReminderEditUIState(),
     actions: EditActions = EditActions(),
 ) {
     val context = LocalContext.current
@@ -1102,7 +1102,6 @@ fun SoundSelectRow(
     }
 }
 
-
 // ------------------------------------------------------------------------------------------------
 
 @Composable
@@ -1145,13 +1144,17 @@ fun ConfirmDeletionDialog(
     )
 }
 
+// ------------------------------------------------------------------------------------------------
+
 @Preview(showBackground = true)
 @Composable
 fun EditScreenPreview() {
     StochaPopTheme {
         EditScreenContent(
             modifier = Modifier.fillMaxSize(),
-            uiState = ReminderEditUIState(reminderDetails = ReminderDetails(useRandomRange = true))
+            uiState = ReminderEditUIState(
+                reminderDetails = ReminderDetails(title="Reminder", useRandomRange = true)
+            )
         )
     }
 }
