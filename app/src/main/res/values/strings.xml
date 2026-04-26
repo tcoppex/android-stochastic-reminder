@@ -36,8 +36,11 @@
     <string name="edit_reminder_default_title">Reminder</string>
     <string name="edit_alarm_custom_sound">Ringtone</string>
 
-    <string name="ringtone_selection_title" translatable="false">Select Notification Sound</string>
-    <string name="require_postnotification_toast" translatable="false">You need to enable notification permission for this to work.</string>
     <string name="time_mode_label">Type</string>
     <string name="time_mode_fixed_label">Fixed</string>
+
+    <string name="ringtone_selection_title" translatable="false">Select Notification Sound</string>
+    <string name="require_postnotification_toast" translatable="false">You need to enable notification permission for this to work.</string>
+    <string name="edit_section_card_schedule" translatable="false">Schedule</string>
+    <string name="edit_section_card_content" translatable="false">Content</string>
 </resources>

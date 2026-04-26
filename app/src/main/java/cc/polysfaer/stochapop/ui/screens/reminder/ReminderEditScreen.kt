@@ -55,6 +55,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -268,7 +269,7 @@ fun EditScreenContent(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         TitledEditSectionCard(
-            title = "Notification",
+            title = stringResource(R.string.edit_section_card_content),
         ) {
             ReminderTitleField(
                 reminder.title,
@@ -322,10 +323,33 @@ fun EditScreenContent(
                 Spacer(Modifier.size(8.dp))
                 Text(stringResource(R.string.edit_test_btn))
             }
+
+//            CustomEditButton(
+//                labelId = R.string.edit_test_btn,
+//                onClick = {
+//                    if (hasPostNotificationPermission(context)) {
+//                        sendNotification(context, reminder.toReminder(), false)
+//                    } else {
+//                        Toast.makeText(
+//                            context,
+//                            R.string.require_postnotification_toast,
+//                            Toast.LENGTH_SHORT
+//                        ).apply { show() }
+//                    }
+//                },
+//                icon = { Icon(
+//                    imageVector = Icons.Outlined.PlayArrow,
+//                    contentDescription = null
+//                ) },
+//                colors = ButtonDefaults.buttonColors(
+//                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+//                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+//                )
+//            )
         }
 
         TitledEditSectionCard(
-            title = "Schedule",
+            title = stringResource(R.string.edit_section_card_schedule),
         ) {
             TimeModeSegmentedButton(
                 reminder.useRandomRange,
@@ -351,6 +375,8 @@ fun EditScreenContent(
                 enabled = reminder.useRandomRange,
                 minvalue = 1f,
             )
+
+            CustomHorizontalDivider()
 
             DaySelectionRow(
                 context = context,
@@ -430,10 +456,12 @@ fun EditScreenContent(
 
 // ------------------------------------------------------------------------------------------------
 
+const val EditSectionCardAlpha = 0.45f //
+
 @Composable
 fun EditSectionCard(
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
+    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = EditSectionCardAlpha),
     content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
@@ -459,7 +487,7 @@ fun TitledEditSectionCard(
     title: String,
     modifier: Modifier = Modifier,
     titleContentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f),
+    containerColor: Color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = EditSectionCardAlpha),
     content: @Composable ColumnScope.() -> Unit
 ) {
     val titleHeight = 24.dp
@@ -505,6 +533,16 @@ fun TitledEditSectionCard(
             }
         }
     }
+}
+
+@Composable
+fun CustomHorizontalDivider(modifier: Modifier = Modifier) {
+    HorizontalDivider(
+        modifier = modifier
+            .padding(vertical = 6.dp)
+            .graphicsLayer(alpha = 0.4f),
+
+        )
 }
 
 // ------------------------------------------------------------------------------------------------
