@@ -111,6 +111,7 @@ import androidx.navigation.navArgument
 import cc.polysfaer.stochapop.R
 import cc.polysfaer.stochapop.controller.NotificationChannels.hasPostNotificationPermission
 import cc.polysfaer.stochapop.controller.sendNotification
+import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import cc.polysfaer.stochapop.ui.AppViewModelProvider
 import cc.polysfaer.stochapop.ui.navigation.NavigationDestination
 import cc.polysfaer.stochapop.ui.theme.StochaPopTheme
@@ -549,7 +550,7 @@ private fun ReminderTitleField(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        supportingText = { SupportingText(value, ReminderEditSetting.MAX_TITLE_LENGTH) },
+        supportingText = { SupportingText(value, ReminderSettings.MAX_TITLE_LENGTH) },
         singleLine = true,
         label = { Text(stringResource(R.string.edit_reminder_title), fontStyle = FontStyle.Italic) },
         keyboardOptions = KeyboardOptions.Default.copy(
@@ -577,7 +578,7 @@ fun ReminderTextField(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        supportingText = { SupportingText(value, ReminderEditSetting.MAX_MESSAGE_LENGTH) },
+        supportingText = { SupportingText(value, ReminderSettings.MAX_MESSAGE_LENGTH) },
         singleLine = false,
         label = { Text(stringResource(R.string.edit_reminder_text), fontStyle = FontStyle.Italic) },
         keyboardOptions = KeyboardOptions.Default.copy(
@@ -904,7 +905,7 @@ fun NotificationCountSlider(
             enabled = enabled,
             value = value,
             onValueChange = onValueChange,
-            valueRange = minvalue..ReminderEditSetting.maxRandomNotificationCount.toFloat(),
+            valueRange = minvalue..ReminderSettings.maxRandomNotificationCount.toFloat(),
             thumb = {
                 Box(modifier = Modifier
                     .size(42.dp)

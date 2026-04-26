@@ -1,24 +1,17 @@
 package cc.polysfaer.stochapop.ui.screens.reminder
 
 import android.net.Uri
-import android.provider.Settings
 import cc.polysfaer.stochapop.data.reminder.Reminder
+import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import java.time.DayOfWeek
 import java.time.LocalTime
-import kotlin.math.min
 
-object ReminderEditSetting {
-    const val MAX_TITLE_LENGTH = 48
-    const val MAX_MESSAGE_LENGTH = 462
-    const val RANDOM_NOTIFICATION_COUNT_LIMIT: Int = 95
-    const val DEFAULT_RANDOM_NOTIFICATION_COUNT = 1
-    val maxRandomNotificationCount: Int = min(20, RANDOM_NOTIFICATION_COUNT_LIMIT)
-}
+// ------------------------------------------------------------------------------------------------
 
 data class ReminderEditUIState(
     val reminderDetails: ReminderDetails = ReminderDetails(), //
     val initialLoadDone: Boolean = false,
-    val previousNotificationCount: Int = 1,
+    val previousNotificationCount: Int = ReminderSettings.defaultRandomNotificationCount,
 )
 
 // ------------------------------------------------------------------------------------------------
@@ -37,8 +30,8 @@ data class ReminderDetails(
     val useRandomRange: Boolean = true,
     val hasSound: Boolean = true,
     val hasVibration: Boolean = false,
-    val soundUri: Uri? = Settings.System.DEFAULT_NOTIFICATION_URI, //
-    val notificationCount: Int = ReminderEditSetting.DEFAULT_RANDOM_NOTIFICATION_COUNT,
+    val soundUri: Uri? = ReminderSettings.DEFAULT_NOTIFICATION_URI,
+    val notificationCount: Int = ReminderSettings.defaultRandomNotificationCount,
     val startTime: LocalTime = getRoundLocalTime(1),
     val endTime: LocalTime = getRoundLocalTime(2),
     val selectedDays: Set<DayOfWeek> = DayOfWeek.entries.toSet(), //

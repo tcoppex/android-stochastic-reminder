@@ -1,7 +1,6 @@
 package cc.polysfaer.stochapop.data
 
 import android.content.Context
-import android.provider.Settings
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -11,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import cc.polysfaer.stochapop.data.reminder.Reminder
 import cc.polysfaer.stochapop.data.reminder.ReminderDao
 import cc.polysfaer.stochapop.data.reminder.ReminderDayConverter
+import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import cc.polysfaer.stochapop.data.reminder.ReminderTimeConverter
 import cc.polysfaer.stochapop.data.reminder.ReminderUriConverter
 
@@ -33,7 +33,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
-                val defaultUriString = Settings.System.DEFAULT_NOTIFICATION_URI.toString()
+                val defaultUriString = ReminderSettings.DEFAULT_NOTIFICATION_URI.toString() //
                 db.execSQL(
                     "ALTER TABLE reminders ADD COLUMN soundUri TEXT DEFAULT '$defaultUriString'"
                 )

@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import cc.polysfaer.stochapop.data.reminder.Reminder
-import cc.polysfaer.stochapop.ui.screens.reminder.ReminderEditSetting
+import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDate
@@ -221,7 +221,7 @@ class SchedulerRepository(
 
     /** Return an unique intent request code from a reminderId and a notification index. */
     private fun getRequestCode(reminderId: Int, notificationId: Int) : Int {
-        return reminderId * ReminderEditSetting.RANDOM_NOTIFICATION_COUNT_LIMIT + notificationId
+        return reminderId * ReminderSettings.RANDOM_NOTIFICATION_COUNT_LIMIT + notificationId
     }
 
     private fun shouldUseExactAlarm(reminder: Reminder): Boolean {
