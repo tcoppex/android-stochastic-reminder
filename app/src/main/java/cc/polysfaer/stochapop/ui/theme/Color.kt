@@ -2,9 +2,9 @@ package cc.polysfaer.stochapop.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val ForestGreenPrimary = Color(0xFF31664C)
-val SageGreenSecondary = Color(0xFF849271)
-val TerraCottaTertiary = Color(0xFF98482E)
+val ForestGreenPrimary = Color(0xFF538049)
+val SageGreenSecondary = Color(0xFF74805F)
+val TerraCottaTertiary = Color(0xFFAA5F6C)
 
 val ErrorRed = Color(0xFFB43D3D)
 val SpaceCrabbyRed = Color(0xFFE76145)
@@ -14,21 +14,18 @@ val SpaceCrabbyRed = Color(0xFFE76145)
 val DarkSalmon = Color(0xFFE9967A) //
 val OffWhiteUpper = Color(0xFFE8E4E4)
 val SplashScreenSand = Color(0xFFE3C9A3)
-val SplashScreenSandLight = Color(0xFFF6F4F0)
-
-val BackgroundColor = SplashScreenSandLight //
+val SplashScreenSandLight = Color(0xFFFCFCF5) // 0xFFFBFBF8
 
 // -------------------------------------------------------
 
 val primaryLight = ForestGreenPrimary
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF9FAF8A)
-val onPrimaryContainerLight = Color(0xFF001F06)
-
+val onPrimaryContainerLight = Color(0xFF254435)
 val secondaryLight = SageGreenSecondary
 val onSecondaryLight = Color(0xFFFFFFFF)
-val secondaryContainerLight = Color(0xFFD2E8D5)
-val onSecondaryContainerLight = Color(0xFF0C1F13)
+val secondaryContainerLight = Color(0xFFD7E8CC)
+val onSecondaryContainerLight = Color(0xFF121F0E)
 
 val tertiaryLight = TerraCottaTertiary
 val onTertiaryLight = Color(0xFFFFFFFF)
@@ -40,7 +37,7 @@ val onErrorLight = Color(0xFFFFFFFF)
 val errorContainerLight = Color(0xFFFFDAD6)
 val onErrorContainerLight = Color(0xFF410002)
 
-val backgroundLight = Color(0xFFFBFBF8)
+val backgroundLight = SplashScreenSandLight // Color(0xFFFBFBF8)
 val onBackgroundLight = Color(0xFF191C1A)
 val surfaceLight = Color(0xFFFBFBF8)
 val onSurfaceLight = Color(0xFF191C1A)
@@ -60,19 +57,20 @@ val surfaceContainerLight = Color(0xFFEDEEEA)
 val surfaceContainerHighLight = Color(0xFFE7E9E4)
 val surfaceContainerHighestLight = Color(0xFFE2E3DF)
 
+// ------------------------------------------------------------------------------------------------
 
-val primaryDark = Color(0xFF95D7AF)
-val onPrimaryDark = Color(0xFF00391F)
-val primaryContainerDark = Color(0xFF0F5234)
+val primaryDark = Color(0xFF3CAC62)
+val onPrimaryDark = Color(0xFF00391C)
+val primaryContainerDark = Color(0xFF195238)
 val onPrimaryContainerDark = Color(0xFFB0D3BD)
 
-val secondaryDark = Color(0xFFB6CCB9)
-val onSecondaryDark = Color(0xFF223528)
+val secondaryDark = Color(0xFF96B09D)
+val onSecondaryDark = Color(0xFF1B3524)
 val secondaryContainerDark = Color(0xFF384B3D)
 val onSecondaryContainerDark = Color(0xFFD2E8D5)
 
-val tertiaryDark = Color(0xFFFFB59D)
-val onTertiaryDark = Color(0xFF5A1D08)
+val tertiaryDark = Color(0xFFAD5D3C)
+val onTertiaryDark = Color(0xFF211000)
 val tertiaryContainerDark = Color(0xFF7A3119)
 val onTertiaryContainerDark = Color(0xFFFFDBD1)
 

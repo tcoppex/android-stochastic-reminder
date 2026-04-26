@@ -3,13 +3,11 @@
 package cc.polysfaer.stochapop.ui.screens.reminder
 
 
-import android.R.attr.enabled
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
-import android.provider.Settings
 import android.text.format.DateFormat
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -462,7 +460,7 @@ fun EditScreenContent(
 
 // -- Section Widgets --
 
-const val EditSectionCardAlpha = 0.45f //
+const val EditSectionCardAlpha = 0.35f //
 
 @Composable
 fun EditSectionCard(
@@ -815,8 +813,6 @@ fun SoundSelectRow(
             .getTitle(context)
     }
 
-//    val ringtoneName = getRingtoneName(context, currentSoundUri)
-
     var ringtoneName by remember(currentSoundUri) {
         mutableStateOf( getRingtoneName(context, currentSoundUri) )
     }
@@ -890,7 +886,7 @@ fun SoundSelectRow(
             onClick = { launcher.launch(intent) },
             shape = MaterialTheme.shapes.extraSmall,
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.75f),
             ),
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
             enabled = enabled
@@ -1018,7 +1014,7 @@ fun TimeSelectorCard(
         onClick = { showTimePicker = true },
         shape = MaterialTheme.shapes.extraSmall,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.75f),
         ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
         enabled = enabled,
