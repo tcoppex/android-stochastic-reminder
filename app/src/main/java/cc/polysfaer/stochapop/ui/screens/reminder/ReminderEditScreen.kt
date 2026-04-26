@@ -264,7 +264,7 @@ fun EditScreenContent(
 
     Column(
         modifier = modifier
-            .padding(horizontal = 14.dp)
+            .padding(horizontal = 11.5.dp)
             .padding(top = 14.dp)
             .verticalScroll(rememberScrollState())
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) },
@@ -479,7 +479,7 @@ fun EditSectionCard(
         )
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             content = content
         )
@@ -810,7 +810,7 @@ fun SoundSelectRow(
     val getRingtoneName: (Context, Uri?) -> String = { ctx, uri ->
         RingtoneManager
             .getRingtone(ctx, uri)
-            .getTitle(context)
+            ?.getTitle(context) ?: "<undefined>"
     }
 
     var ringtoneName by remember(currentSoundUri) {
