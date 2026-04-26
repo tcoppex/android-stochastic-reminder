@@ -30,7 +30,7 @@
     <string name="tuto_1_message">- Einmal tippen zum Bearbeiten,\n- Zweimal tippen zum Aktivieren/Deaktivieren,\n- Nach links wischen zum Löschen.</string>
     <string name="tuto_2_title">Zufällige Zeitspannen</string>
     <string name="tuto_2_message">Verwenden Sie eine Zeitspanne, um Benachrichtigungen zufällig zu verteilen.\n\nWenn eine Zeitspanne zwei Tage überschneidet, wird der Starttag als Auslösetag für den gesamten Zeitraum verwendet.</string>
-    <string name="tuto_3_title">Cooler Tipp</string>
+    <string name="tuto_3_title">Schlauer Kniff</string>
     <string name="tuto_3_message">Stumme Benachrichtigungen verbrauchen weniger Akku</string>
     <string name="tuto_4_title">Danke!</string>
     <string name="edit_alarm_custom_sound">Klingelton</string>
@@ -38,4 +38,6 @@
     <string name="time_mode_fixed_label">Behoben</string>
     <string name="edit_section_card_schedule">Zeitplan</string>
     <string name="edit_section_card_content">Inhalt</string>
+    <string name="ringtone_selection_title">Ton auswählen</string>
+    <string name="require_postnotification_toast">Benachrichtigungen erlauben, damit dies funktioniert.</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="edit_screen_name">Editar recordatorio</string>
-    <string name="new_screen_name">Nuevo recordatorio</string>
+    <string name="new_screen_name">Nuevo Recordatorio</string>
     <string name="home_btn_add">Añadir recordatorio</string>
     <string name="edit_enable_label">Activar</string>
     <string name="time_mode_random_label">Aleatorio</string>
@@ -30,7 +30,7 @@
     <string name="tuto_1_message">- Toca una vez para editar,\n- Toca dos veces para activar/desactivar,\n- Desliza a la izquierda para eliminar.</string>
     <string name="tuto_2_title">Rangos Aleatorios</string>
     <string name="tuto_2_message">Usa un rango de tiempo para distribuir las notificaciones de forma aleatoria.\n\nCuando un rango abarca dos días, el día de inicio se utiliza como el día de activación para todo el periodo.</string>
-    <string name="tuto_3_title">Consejo útil</string>
+    <string name="tuto_3_title">Truco de lince</string>
     <string name="tuto_3_message">Las notificaciones silenciadas consumen menos batería</string>
     <string name="tuto_4_title">¡Gracias!</string>
     <string name="edit_alarm_custom_sound">Tono</string>
@@ -38,4 +38,6 @@
     <string name="time_mode_fixed_label">Fijado</string>
     <string name="edit_section_card_schedule">Horario</string>
     <string name="edit_section_card_content">Contenido</string>
+    <string name="ringtone_selection_title">Seleccionar un sonido</string>
+    <string name="require_postnotification_toast">Activa las notificaciones para que esto funcione.</string>
 </resources>

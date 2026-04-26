@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Stochastic Reminder</string>
+
     <string name="edit_screen_name">Edit Reminder</string>
     <string name="new_screen_name">New Reminder</string>
     <string name="home_btn_add">Add Reminder</string>
@@ -15,7 +16,6 @@
     <string name="dialog_dismiss_label">Cancel</string>
     <string name="permission_required_title">Permission Required</string>
     <string name="permission_required_message">You need to enable notifications to use this app.</string>
-    <string name="app_notification_channel_id" translatable="false">STOCHAPOP_REMINDERS_CHANNEL_ID</string>
     <string name="edit_reminder_text">Message</string>
     <string name="edit_reminder_title">Title</string>
     <string name="delete_reminder_confirmation_title">Delete Reminder</string>
@@ -26,7 +26,7 @@
     <string name="edit_label_alarm_type">Alerts</string>
     <string name="edit_alarm_type_sound">Sound</string>
     <string name="edit_alarm_type_vibration">Vibration</string>
-    <string name="tuto_1_message">- Single tap to edit,\n- Double tap to enable/disable,\n- Left swipe to delete.</string>
+    <string name="tuto_1_message">- Single tap to edit\n- Double tap to enable/disable\n- Left swipe to delete</string>
     <string name="tuto_1_title">The Basics</string>
     <string name="tuto_2_title">Random Ranges</string>
     <string name="tuto_2_message">Use a time range to spread notifications randomly.\n\nWhen a time range overlap two days, the starting day is used as the triggering day for the whole range.</string>
@@ -35,12 +35,10 @@
     <string name="tuto_4_title">Thank you!</string>
     <string name="edit_reminder_default_title">Reminder</string>
     <string name="edit_alarm_custom_sound">Ringtone</string>
-
     <string name="time_mode_label">Type</string>
     <string name="time_mode_fixed_label">Fixed</string>
     <string name="edit_section_card_schedule">Schedule</string>
     <string name="edit_section_card_content">Content</string>
-
-    <string name="ringtone_selection_title" translatable="false">Select Notification Sound</string>
-    <string name="require_postnotification_toast" translatable="false">You need to enable notification permission for this to work.</string>
+    <string name="ringtone_selection_title">Select Notification Sound</string>
+    <string name="require_postnotification_toast">You need to enable notification permission for this to work.</string>
 </resources>

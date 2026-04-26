@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="new_screen_name">Nuovo promemoria</string>
+    <string name="new_screen_name">Nuovo Promemoria</string>
     <string name="edit_screen_name">Modifica promemoria</string>
     <string name="home_btn_add">Aggiungi promemoria</string>
     <string name="permission_required_message">È necessario abilitare le notifiche per utilizzare questa app.</string>
@@ -29,7 +29,7 @@
     <string name="tuto_1_message">- Tocca una volta per modificare,\n- Tocca due volte per attivare/disattivare,\n- Scorri a sinistra per eliminare.</string>
     <string name="tuto_2_title">Intervalli Casuali</string>
     <string name="tuto_2_message">Utilizza un intervallo di tempo per distribuire le notifiche in modo casuale.\n\nQuando un intervallo copre due giorni, il giorno di inizio viene utilizzato come giorno di attivazione per l\\\'intero periodo.</string>
-    <string name="tuto_3_title">Consiglio utile</string>
+    <string name="tuto_3_title">Dritta geniale</string>
     <string name="tuto_3_message">Le notifiche silenziose consumano meno batteria</string>
     <string name="tuto_4_title">Grazie!</string>
     <string name="time_mode_random_label">Casuale</string>
@@ -38,4 +38,6 @@
     <string name="time_mode_fixed_label">Fisso</string>
     <string name="edit_section_card_schedule">Programma</string>
     <string name="edit_section_card_content">Contenuto</string>
+    <string name="ringtone_selection_title">Seleziona suono</string>
+    <string name="require_postnotification_toast">Attiva le notifiche per abilitare questa funzione.</string>
 </resources>

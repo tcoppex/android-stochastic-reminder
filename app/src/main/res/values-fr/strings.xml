@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="edit_screen_name">Modifier le rappel</string>
-    <string name="new_screen_name">Nouveau rappel</string>
+    <string name="new_screen_name">Nouveau Rappel</string>
     <string name="home_btn_add">Ajouter un rappel</string>
     <string name="edit_enable_label">Activer</string>
     <string name="time_mode_random_label">Aléatoire</string>
@@ -38,4 +38,6 @@
     <string name="time_mode_fixed_label">Fixe</string>
     <string name="edit_section_card_schedule">PLanification</string>
     <string name="edit_section_card_content">Contenu</string>
+    <string name="ringtone_selection_title">Sélectionner un son</string>
+    <string name="require_postnotification_toast">Cette fonction nécessite les permissions de notifications.</string>
 </resources>
