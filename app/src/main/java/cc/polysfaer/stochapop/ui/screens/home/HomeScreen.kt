@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -56,9 +55,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cc.polysfaer.stochapop.R
+import cc.polysfaer.stochapop.controller.NotificationChannels.hasPostNotificationPermission
 import cc.polysfaer.stochapop.controller.openAppSettings
 import cc.polysfaer.stochapop.data.DataSource
 import cc.polysfaer.stochapop.data.reminder.Reminder
@@ -130,137 +129,7 @@ fun HomeScreenContent(
     }
 }
 
-@Composable
-fun AddReminderWithPermissionButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val context = LocalContext.current
-    val activity = context.findActivity()
-
-    // Should we show a dialog when the permission has not been granted
-    var showRationaleDialog by remember { mutableStateOf(false) }
-    var haveClicked by remember { mutableStateOf(false) }
-
-    // Check if we have the POST_NOTIFICATION permission.
-    var hasNotificationPermission by remember { mutableStateOf(value =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission( context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-    )}
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        hasNotificationPermission = isGranted
-        if (isGranted && haveClicked) { onClick() }
-    }
-
-    LaunchedEffect(Unit) {
-        if (!hasNotificationPermission) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }
-    }
-
-    // Wrap the original onClick to handle the permission request.
-    val onClickWrapper = {
-        val isTiramisuPlus = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
-        haveClicked = true
-
-        when {
-            hasNotificationPermission || !isTiramisuPlus -> {
-                onClick()
-            }
-
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                activity!!,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) -> {
-                showRationaleDialog = true
-            }
-
-            else -> {
-                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }
-    }
-
-    Box(modifier = modifier) {
-        AddReminderButton(
-            onClick = onClickWrapper,
-            modifier = Modifier.fillMaxWidth()
-        )
-        if (showRationaleDialog) {
-            NotificationRationaleDialog(
-                {
-                    showRationaleDialog = false
-                    haveClicked = false
-                },
-                {
-                    openAppSettings(context)
-                    showRationaleDialog = false
-                    haveClicked = false
-                }
-            )
-        }
-    }
-}
-
-fun Context.findActivity(): Activity? {
-    var context = this
-    while (context is ContextWrapper) {
-        if (context is Activity) return context
-        context = context.baseContext
-    }
-    return null
-}
-
-
-@Composable
-fun AddReminderButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(22.dp),
-        shape = MaterialTheme.shapes.medium,
-    ) {
-        Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-        Text(stringResource(R.string.home_btn_add))
-    }
-}
-
-@Composable
-fun NotificationRationaleDialog(
-    onDismissRequest: () -> Unit,
-    onConfirmRequest: () -> Unit
-) {
-    AlertDialog(
-        icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = null) },
-        title = { Text(text = stringResource(R.string.permission_required_title)) },
-        text = { Text(text = stringResource(R.string.permission_required_message)) },
-        onDismissRequest = onDismissRequest,
-        confirmButton = {
-            TextButton(onClick = onConfirmRequest) {
-                Text(stringResource(R.string.dialog_confirm_label))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(stringResource(R.string.dialog_dismiss_label))
-            }
-        }
-    )
-}
+// ------------------------------------------------------------------------------------------------
 
 @Composable
 fun ReminderList(
@@ -292,14 +161,14 @@ fun ReminderList(
                         onClick = { onEditReminder(reminder) },
                         onDoubleClick = { onToggleReminder(reminder) },
                         getDayFirstLetter = getDayFirstLetter,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
                     )
                 }
             }
 
             HorizontalDivider(
                 thickness = 1.dp,
-                modifier = Modifier.graphicsLayer(alpha=0.75f),
+                modifier = Modifier.graphicsLayer(alpha=0.25f),
             )
         }
     }
@@ -353,92 +222,223 @@ fun ReminderCard(
         ,
         shape = MaterialTheme.shapes.extraSmall,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
         ),
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .padding(4.dp)
+                .graphicsLayer(alpha = if (reminder.enabled) 1f else 0.33f),
         ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .graphicsLayer(alpha = if (reminder.enabled) 1f else 0.33f)
+            if (!reminder.title.isEmpty()) {
+                Text(
+                    text = reminder.title,
+                    modifier = Modifier.padding(bottom = 3.dp),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontStyle = FontStyle.Normal,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+
+            // -----------------------
+
+            Row(
+                modifier = Modifier.graphicsLayer(alpha = 0.4f),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                if (!reminder.title.isEmpty()) {
-                    Text(
-                        text = reminder.title,
-                        modifier = Modifier.padding(bottom = 3.dp),
-                        style = MaterialTheme.typography.titleSmall,
-                        fontStyle = FontStyle.Normal,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-
-                // -----------------------
-
-                Row(
-                    modifier = Modifier.graphicsLayer(alpha = 0.4f),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (!reminder.selectedDays.isEmpty()) {
-                        Row(Modifier
-                            .border(
-                                width = 0.25.dp,
-                                color = Color.DarkGray.copy(alpha = 0.3f),
-                                shape = CircleShape,
-                            )
-                            .padding(horizontal = 3.dp, vertical = 0.5.dp)
-                        ) {
-                            DayOfWeek.entries.forEachIndexed { index, day ->
-                                val alpha = if (reminder.selectedDays.contains(day)) 1.0f else 0.25f
-                                CardInfoText(
-                                    text = getDayFirstLetter(day),
-                                    modifier = Modifier.graphicsLayer(alpha = alpha)
-                                )
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-                    }
-
-                    CardInfoText(reminder.startTime.format(formatter))
-                    if (reminder.useRandomRange) {
-                        CardInfoText(" - ${reminder.endTime.format(formatter)}")
-                        Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-                        CardInfoText("x${reminder.notificationCount}")
-                        Icon(
-                            painter = painterResource(id = R.drawable.casino_24px),
-                            contentDescription = "dice icon",
-                            modifier = Modifier.size(14.dp)
+                if (!reminder.selectedDays.isEmpty()) {
+                    Row(Modifier
+                        .border(
+                            width = 0.25.dp,
+                            color = Color.DarkGray.copy(alpha = 0.3f),
+                            shape = CircleShape,
                         )
+                        .padding(horizontal = 3.dp, vertical = 0.5.dp)
+                    ) {
+                        DayOfWeek.entries.forEachIndexed { index, day ->
+                            val alpha = if (reminder.selectedDays.contains(day)) 1.0f else 0.25f
+                            CardInfoText(
+                                text = getDayFirstLetter(day),
+                                modifier = Modifier.graphicsLayer(alpha = alpha)
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-
-                    if (!reminder.hasSound && !reminder.hasVibration) {
-                        AlarmIcon(R.drawable.volume_off_24px, "no alarm")
-                    } else {
-                        if (reminder.hasSound) {
-                            AlarmIcon(R.drawable.volume_up_24px, "sound alarm")
-                            Spacer(modifier = Modifier.padding(horizontal = 2.dp))
-                        }
-                        if (reminder.hasVibration) {
-                            AlarmIcon(R.drawable.mobile_vibrate_24px, "vibration alarm")
-                        }
-                    }
-
                 }
 
-                // -----------------------
+                CardInfoText(reminder.startTime.format(formatter))
+                if (reminder.useRandomRange) {
+                    CardInfoText(" - ${reminder.endTime.format(formatter)}")
+                    Spacer(modifier = Modifier.padding(horizontal = 5.dp))
+                    CardInfoText("x${reminder.notificationCount}")
+                    Icon(
+                        painter = painterResource(id = R.drawable.casino_24px),
+                        contentDescription = "dice icon",
+                        modifier = Modifier.size(14.dp)
+                    )
+                }
 
-                Text(
-                    text = reminder.message,
-                    modifier = Modifier
-                        .padding(start = 12.dp, end = 4.dp, top = 6.dp, bottom = 6.dp),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+                Spacer(modifier = Modifier.padding(horizontal = 5.dp))
+
+                if (!reminder.hasSound && !reminder.hasVibration) {
+                    AlarmIcon(R.drawable.volume_off_24px, "no alarm")
+                } else {
+                    if (reminder.hasSound) {
+                        AlarmIcon(R.drawable.volume_up_24px, "sound alarm")
+                        Spacer(modifier = Modifier.padding(horizontal = 2.dp))
+                    }
+                    if (reminder.hasVibration) {
+                        AlarmIcon(R.drawable.mobile_vibrate_24px, "vibration alarm")
+                    }
+                }
+
             }
+
+            // -----------------------
+
+            Text(
+                text = reminder.message,
+                modifier = Modifier
+                    .padding(start = 12.dp, end = 4.dp, top = 6.dp, bottom = 6.dp),
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+    }
+}
+
+// ------------------------------------------------------------------------------------------------
+
+@Composable
+fun NotificationRationaleDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmRequest: () -> Unit
+) {
+    AlertDialog(
+        icon = { Icon(imageVector = Icons.Outlined.Info, contentDescription = null) },
+        title = { Text(text = stringResource(R.string.permission_required_title)) },
+        text = { Text(text = stringResource(R.string.permission_required_message)) },
+        onDismissRequest = onDismissRequest,
+        confirmButton = {
+            TextButton(onClick = onConfirmRequest) {
+                Text(stringResource(R.string.dialog_confirm_label))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismissRequest) {
+                Text(stringResource(R.string.dialog_dismiss_label))
+            }
+        }
+    )
+}
+
+@Composable
+fun AddReminderButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(22.dp),
+        shape = MaterialTheme.shapes.medium,
+    ) {
+        Icon(imageVector = Icons.Outlined.Add, contentDescription = null)
+        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        Text(stringResource(R.string.home_btn_add))
+    }
+}
+
+
+fun Context.findActivity(): Activity? {
+    var context = this
+    while (context is ContextWrapper) {
+        if (context is Activity) return context
+        context = context.baseContext
+    }
+    return null
+}
+
+
+@Composable
+fun AddReminderWithPermissionButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
+    val activity = context.findActivity()
+
+    // Should we show a dialog when the permission has not been granted
+    var showRationaleDialog by remember { mutableStateOf(false) }
+    var haveClicked by remember { mutableStateOf(false) }
+
+    // Check if we have the POST_NOTIFICATION permission.
+    var hasNotificationPermission by remember {
+        mutableStateOf(hasPostNotificationPermission(context))
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        hasNotificationPermission = isGranted
+        if (haveClicked) {
+            if (isGranted) {
+                onClick()
+            } else {
+                showRationaleDialog = true
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        if (!hasNotificationPermission) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    // Wrap the original onClick to handle the permission request.
+    val onClickWrapper = {
+        val isTiramisuPlus = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+        haveClicked = true
+
+        when {
+            hasNotificationPermission || !isTiramisuPlus -> {
+                onClick()
+            }
+
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                activity!!,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) -> {
+                showRationaleDialog = true
+            }
+
+            else -> {
+                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    Box(modifier = modifier) {
+        AddReminderButton(
+            onClick = onClickWrapper,
+            modifier = Modifier.fillMaxWidth()
+        )
+        if (showRationaleDialog) {
+            NotificationRationaleDialog(
+                {
+                    showRationaleDialog = false
+                    haveClicked = false
+                },
+                {
+                    openAppSettings(context)
+                    showRationaleDialog = false
+                    haveClicked = false
+                }
+            )
         }
     }
 }

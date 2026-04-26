@@ -78,7 +78,7 @@ fun StochaPopAppBar(
         expandedHeight = 45.dp,
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
         title = { Text(text = stringResource(titleRes)) },
         navigationIcon = {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="edit_screen_name">Editar recordatorio</string>
-    <string name="new_screen_name">Nuevo recordatorio</string>
+    <string name="new_screen_name">Nuevo Recordatorio</string>
     <string name="home_btn_add">Añadir recordatorio</string>
     <string name="edit_enable_label">Activar</string>
-    <string name="use_random_range_label">Rango aleatorio</string>
-    <string name="edit_time_label">Hora</string>
+    <string name="time_mode_random_label">Aleatorio</string>
+    <string name="edit_time_label">Horario</string>
     <string name="edit_days_selection_label">Días de la semana</string>
     <string name="edit_save_btn">Guardar</string>
     <string name="edit_test_btn">Probar</string>
@@ -23,14 +23,21 @@
     <string name="top_bar_arrow_desc">Atrás</string>
     <string name="edit_cancel_btn">Cancelar</string>
     <string name="day_selection_toast">Debes seleccionar al menos un día.</string>
-    <string name="edit_label_alarm_type">Tipo de alarma</string>
+    <string name="edit_label_alarm_type">Alertas</string>
     <string name="edit_alarm_type_sound">Sonido</string>
     <string name="edit_alarm_type_vibration">Vibración</string>
     <string name="tuto_1_title">Lo Básico</string>
     <string name="tuto_1_message">- Toca una vez para editar,\n- Toca dos veces para activar/desactivar,\n- Desliza a la izquierda para eliminar.</string>
     <string name="tuto_2_title">Rangos Aleatorios</string>
     <string name="tuto_2_message">Usa un rango de tiempo para distribuir las notificaciones de forma aleatoria.\n\nCuando un rango abarca dos días, el día de inicio se utiliza como el día de activación para todo el periodo.</string>
-    <string name="tuto_3_title">Consejo útil</string>
+    <string name="tuto_3_title">Truco de lince</string>
     <string name="tuto_3_message">Las notificaciones silenciadas consumen menos batería</string>
     <string name="tuto_4_title">¡Gracias!</string>
+    <string name="edit_alarm_custom_sound">Tono</string>
+    <string name="time_mode_label">Tipo</string>
+    <string name="time_mode_fixed_label">Fijado</string>
+    <string name="edit_section_card_schedule">Horario</string>
+    <string name="edit_section_card_content">Contenido</string>
+    <string name="ringtone_selection_title">Seleccionar un sonido</string>
+    <string name="require_postnotification_toast">Activa las notificaciones para que esto funcione.</string>
 </resources>

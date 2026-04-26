@@ -16,7 +16,7 @@ _Stochastic Reminder_ is an Android application to schedule weekly fixed and ran
 - Fixed and random scheduling with possible overlapped days,
 - Triggered on specific days of the week,
 - Specify both the title and long-form multiline message,
-- Availables with sound, vibration, both or none,
+- Availables with custom sound, vibration, both or none,
 - Exact alarm for non silent notifications,
 - Battery preserving scheduling on silent notifications,
 - Supported languages: Français 🇫🇷, Italiano 🇮🇹, Español 🇪🇸 und Deutsch 🇩🇪.
@@ -24,8 +24,10 @@ _Stochastic Reminder_ is an Android application to schedule weekly fixed and ran
 ## Preview
 
 <p align="center">
-  <img src="https://i.imgur.com/MbGolnL.png" width="300" alt="Home Screen" />
-  <img src="https://i.imgur.com/XdSrwFG.png" width="300" alt="Edit Screen" />
+  <!-- <img src="https://i.imgur.com/MbGolnL.png" width="300" alt="Home Screen" /> -->
+  <!-- <img src="https://i.imgur.com/XdSrwFG.png" width="300" alt="Edit Screen" /> -->
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="300" alt="Home Screen" />
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="300" alt="Edit Screen" />
 </p>
 
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="edit_screen_name">Modifier le rappel</string>
-    <string name="new_screen_name">Nouveau rappel</string>
+    <string name="new_screen_name">Nouveau Rappel</string>
     <string name="home_btn_add">Ajouter un rappel</string>
     <string name="edit_enable_label">Activer</string>
-    <string name="use_random_range_label">Plage aléatoire</string>
-    <string name="edit_time_label">Heure</string>
+    <string name="time_mode_random_label">Aléatoire</string>
+    <string name="edit_time_label">Horaire</string>
     <string name="edit_days_selection_label">Jours de la semaine</string>
     <string name="edit_save_btn">Enregistrer</string>
     <string name="edit_test_btn">Tester</string>
@@ -22,7 +22,7 @@
     <string name="top_bar_arrow_desc">Retour</string>
     <string name="edit_cancel_btn">Annuler</string>
     <string name="day_selection_toast">Au moins un jour doit être sélectionné.</string>
-    <string name="edit_label_alarm_type">Type d\'alarme</string>
+    <string name="edit_label_alarm_type">Alertes</string>
     <string name="edit_alarm_type_sound">Son</string>
     <string name="edit_alarm_type_vibration">Vibration</string>
     <string name="tuto_1_title">Les Bases</string>
@@ -33,4 +33,11 @@
     <string name="tuto_3_message">Les notifications silencieuses économisent de la batterie</string>
     <string name="tuto_4_title">Merci !</string>
     <string name="edit_reminder_default_title">Rappel</string>
+    <string name="edit_alarm_custom_sound">Sonnerie</string>
+    <string name="time_mode_label">Type</string>
+    <string name="time_mode_fixed_label">Fixe</string>
+    <string name="edit_section_card_schedule">PLanification</string>
+    <string name="edit_section_card_content">Contenu</string>
+    <string name="ringtone_selection_title">Sélectionner un son</string>
+    <string name="require_postnotification_toast">Cette fonction nécessite les permissions de notifications.</string>
 </resources>

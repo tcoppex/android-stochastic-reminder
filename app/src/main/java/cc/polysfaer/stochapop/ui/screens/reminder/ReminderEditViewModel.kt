@@ -1,6 +1,7 @@
 package cc.polysfaer.stochapop.ui.screens.reminder
 
 import android.app.Application
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cc.polysfaer.stochapop.R
 import cc.polysfaer.stochapop.controller.broadcast.SchedulerRepository
+import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import cc.polysfaer.stochapop.data.reminder.RemindersRepository
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
@@ -53,11 +55,11 @@ class ReminderEditViewModel(
     }
 
     fun setTitle(title: String) = updateReminderDetails {
-        it.copy(title = title.take(ReminderEditSetting.MAX_TITLE_LENGTH).replace("\n", ""))
+        it.copy(title = title.take(ReminderSettings.MAX_TITLE_LENGTH).replace("\n", ""))
     }
 
     fun setMessage(message: String) = updateReminderDetails {
-        it.copy(message = message.take(ReminderEditSetting.MAX_MESSAGE_LENGTH))
+        it.copy(message = message.take(ReminderSettings.MAX_MESSAGE_LENGTH))
     }
 
     fun toggleEnable(state: Boolean) = updateReminderDetails {
@@ -94,6 +96,10 @@ class ReminderEditViewModel(
         } else {
             it.copy(selectedDays = selectedDays)
         }
+    }
+
+    fun setSoundUri(uri: Uri?) = updateReminderDetails {
+        it.copy(soundUri = uri)
     }
 
     // -----------------------------

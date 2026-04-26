@@ -1,43 +1,43 @@
 package cc.polysfaer.stochapop.ui.screens.reminder
 
+import android.net.Uri
 import cc.polysfaer.stochapop.data.reminder.Reminder
+import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import java.time.DayOfWeek
 import java.time.LocalTime
-import kotlin.math.min
 
-object ReminderEditSetting {
-    const val MAX_TITLE_LENGTH = 48
-    const val MAX_MESSAGE_LENGTH = 462
-    const val RANDOM_NOTIFICATION_COUNT_LIMIT: Int = 95
-    const val DEFAULT_RANDOM_NOTIFICATION_COUNT = 1
-    val maxRandomNotificationCount: Int = min(20, RANDOM_NOTIFICATION_COUNT_LIMIT)
-}
+// ------------------------------------------------------------------------------------------------
 
 data class ReminderEditUIState(
-    val reminderDetails: ReminderDetails = ReminderDetails(), //
+    val reminderDetails: ReminderDetails, //
     val initialLoadDone: Boolean = false,
-    val previousNotificationCount: Int = 1,
+    val previousNotificationCount: Int = ReminderSettings.defaultRandomNotificationCount,
 )
 
-// TODO? remove ReminderDetails to use Reminder directly.
+// ------------------------------------------------------------------------------------------------
+
+fun getRoundLocalTime(hoursToAdd: Long): LocalTime {
+    return LocalTime.of(LocalTime.now().plusHours(hoursToAdd).hour, 0)
+}
+
+// TODO? remove ReminderDetails to use Reminder directly, as they are basically the same (minus default values).
 data class ReminderDetails(
     val id: Int = 0,
 
-    val title: String = "Reminder",
+    val title: String,  // a localized default value should be provided on creation..
     val message: String = "",
     val enabled: Boolean = true,
     val useRandomRange: Boolean = true,
     val hasSound: Boolean = true,
     val hasVibration: Boolean = false,
-    val notificationCount: Int = ReminderEditSetting.DEFAULT_RANDOM_NOTIFICATION_COUNT,
+    val soundUri: Uri? = ReminderSettings.DEFAULT_NOTIFICATION_URI,
+    val notificationCount: Int = ReminderSettings.defaultRandomNotificationCount,
     val startTime: LocalTime = getRoundLocalTime(1),
     val endTime: LocalTime = getRoundLocalTime(2),
-    val selectedDays: Set<DayOfWeek> = DayOfWeek.entries.toSet(), //
+    val selectedDays: Set<DayOfWeek> = DayOfWeek.entries.toSet(),
 )
 
-fun getRoundLocalTime(hoursToAdd: Long): LocalTime {
-    return LocalTime.of(LocalTime.now().plusHours(hoursToAdd).hour, 0)
-}
+// ------------------------------------------------------------------------------------------------
 
 fun ReminderDetails.toReminder(): Reminder = Reminder(
     id = id,
@@ -46,11 +46,12 @@ fun ReminderDetails.toReminder(): Reminder = Reminder(
     enabled = enabled,
     hasSound = hasSound,
     hasVibration = hasVibration,
+    soundUri = soundUri,
     useRandomRange = useRandomRange,
     notificationCount = notificationCount,
     startTime = startTime,
     endTime = endTime,
-    selectedDays = selectedDays
+    selectedDays = selectedDays,
 )
 
 fun Reminder.toReminderDetail(): ReminderDetails = ReminderDetails(
@@ -60,6 +61,7 @@ fun Reminder.toReminderDetail(): ReminderDetails = ReminderDetails(
     enabled = enabled,
     hasSound = hasSound,
     hasVibration = hasVibration,
+    soundUri = soundUri,
     useRandomRange = useRandomRange,
     notificationCount = notificationCount,
     startTime = startTime,
@@ -72,3 +74,5 @@ fun Reminder.toReminderEditUIState(initialLoadDone: Boolean = true): ReminderEdi
     initialLoadDone = initialLoadDone,
     previousNotificationCount = notificationCount,
 )
+
+// ------------------------------------------------------------------------------------------------

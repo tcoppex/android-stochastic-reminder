@@ -11,6 +11,8 @@ class OfflineRemindersRepository(private val reminderDao: ReminderDao): Reminder
 
     override suspend fun getReminder(id: Int): Reminder? = reminderDao.getReminder(id)
 
+    override suspend fun insertReminders(reminders: List<Reminder>) = reminderDao.insertAll(reminders)
+
     override suspend fun insertReminder(reminder: Reminder) = reminderDao.insert(reminder)
 
     override suspend fun deleteReminder(reminder: Reminder) = reminderDao.delete(reminder)

@@ -47,22 +47,10 @@ class HomeViewModel(
 
         if (isFirstRun) {
             viewModelScope.launch {
-              if (true) {
-                  // Fill the DB with the DataSource (to be exported).
-                  reminderList.forEach {
-                      remindersRepository.insertReminder(it)
-                      if (it.enabled) {
-                          schedulerRepository.scheduleReminderAlarms(it)
-                      }
-                  }
-              } else {
-                  // Only fill the DB with the last DataSource record.
-                  val ps = reminderList.last()
-                  remindersRepository.insertReminder(ps)
-                  if (ps.enabled) {
-                      schedulerRepository.scheduleReminderAlarms(ps)
-                  }
-              }
+                remindersRepository.insertReminders(reminderList)
+                reminderList.filter { it.enabled }.forEach {
+                    schedulerRepository.scheduleReminderAlarms(it)
+                }
             }
             sharedPreference.edit { putBoolean(AppSettingsName.IS_FIRST_RUN.key, false) }
         }
