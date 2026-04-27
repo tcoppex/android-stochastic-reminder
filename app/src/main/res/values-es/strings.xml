@@ -36,7 +36,7 @@
     <string name="edit_alarm_custom_sound">Tono</string>
     <string name="time_mode_label">Tipo</string>
     <string name="time_mode_fixed_label">Fijado</string>
-    <string name="edit_section_card_schedule">Horario</string>
+    <string name="edit_section_card_schedule">Programación</string>
     <string name="edit_section_card_content">Contenido</string>
     <string name="ringtone_selection_title">Seleccionar un sonido</string>
     <string name="require_postnotification_toast">Activa las notificaciones para que esto funcione.</string>
