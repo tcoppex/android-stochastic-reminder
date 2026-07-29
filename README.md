@@ -13,7 +13,7 @@ _Stochastic Reminder_ is an Android application to schedule weekly fixed and ran
 
 ### Features
 
-- Fixed and random scheduling with possible overlapped days,
+- Fixed, sequential and random scheduling with possible overlapped days,
 - Triggered on specific days of the week,
 - Specify both the title and long-form multiline message,
 - Availables with custom sound, vibration, both or none,
