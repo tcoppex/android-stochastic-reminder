@@ -14,15 +14,24 @@ data class Reminder(
     val title: String,                                      // size = ReminderEditUiState.MAX_TITLE_LENGTH
     val message: String,                                    // size = ReminderEditUiState.MAX_MESSAGE_LENGTH
     val enabled: Boolean,
-    val useRandomRange: Boolean,
     val hasSound: Boolean,
     val hasVibration: Boolean,
     val soundUri: Uri?,                                     // stored as 'String?'
+    val scheduleType: ReminderScheduleType,                 // stored as Int
     val notificationCount: Int,
     val startTime: LocalTime,                               // stored as Int (minutes of the day)
     val endTime: LocalTime,                                 // stored as Int (minutes of the day)
     val selectedDays: Set<DayOfWeek>,                       // stored as Int (mask of days)
 )
+
+object ReminderScheduleTypeConverter {
+    @TypeConverter
+    fun fromReminderScheduleType(type: ReminderScheduleType): Int = type.ordinal
+
+    @TypeConverter
+    fun toReminderScheduleType(value: Int): ReminderScheduleType =
+        ReminderScheduleType.entries.getOrElse(value) { ReminderScheduleType.FIXED }
+}
 
 class ReminderTimeConverter {
     @TypeConverter

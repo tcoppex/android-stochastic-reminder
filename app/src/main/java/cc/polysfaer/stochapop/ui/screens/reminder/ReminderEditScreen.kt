@@ -113,6 +113,8 @@ import androidx.navigation.navArgument
 import cc.polysfaer.stochapop.R
 import cc.polysfaer.stochapop.controller.NotificationChannels.hasPostNotificationPermission
 import cc.polysfaer.stochapop.controller.sendNotification
+import cc.polysfaer.stochapop.data.reminder.ReminderScheduleType
+import cc.polysfaer.stochapop.data.reminder.ReminderScheduleTypeConverter
 import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import cc.polysfaer.stochapop.ui.AppViewModelProvider
 import cc.polysfaer.stochapop.ui.navigation.NavigationDestination
@@ -145,9 +147,9 @@ data class EditActions(
     val onTitleChange: (String) -> Unit = {},
     val onMessageChange: (String) -> Unit = {},
     val onToggleEnable: (Boolean) -> Unit = {},
-    val onToggleRandomRange: (Boolean) -> Unit = {},
     val onToggleSound: (Boolean) -> Unit = {},
     val onToggleVibration: (Boolean) -> Unit = {},
+    val onScheduleTypeChange: (ReminderScheduleType) -> Unit = {},
     val onStartTimeChange: (LocalTime) -> Unit = {},
     val onEndTimeChange: (LocalTime) -> Unit = {},
     val onNotificationCountChange: (Int) -> Unit = {},
@@ -171,9 +173,9 @@ fun ReminderEditScreen(
             onTitleChange = viewModel::setTitle,
             onMessageChange = viewModel::setMessage,
             onToggleEnable = viewModel::toggleEnable,
-            onToggleRandomRange = viewModel::toggleRandomRange,
             onToggleSound = viewModel::toggleSound,
             onToggleVibration = viewModel::toggleVibration,
+            onScheduleTypeChange = viewModel::setScheduleType,
             onStartTimeChange = viewModel::setStartTime,
             onEndTimeChange = viewModel::setTimeRangeEnd,
             onNotificationCountChange = viewModel::setRangeNotificationCount,
@@ -362,14 +364,14 @@ fun EditScreenContent(
 
             CustomHorizontalDivider()
 
-            TimeModeSegmentedButton(
-                reminder.useRandomRange,
-                actions.onToggleRandomRange,
+            ScheduleTypeSegmentedButton(
+                reminder.scheduleType,
+                actions.onScheduleTypeChange,
                 modifier = Modifier.fillMaxWidth()
             )
 
             TimeInputRow(
-                useRange = reminder.useRandomRange,
+                useRange = reminder.scheduleType.useRange,
                 startTime = reminder.startTime,
                 endTime = reminder.endTime,
                 onStartTimeChange = actions.onStartTimeChange,
@@ -383,7 +385,7 @@ fun EditScreenContent(
                 onValueChange = {
                     actions.onNotificationCountChange(it.toInt())
                 },
-                enabled = reminder.useRandomRange,
+                enabled = reminder.scheduleType.useRange,
                 minvalue = 1f,
             )
         }
@@ -611,39 +613,48 @@ fun CustomEditButton(
     }
 }
 
-//@Composable
-//fun CheckRow(
-//    labelId: Int,
-//    checked: Boolean,
-//    onCheckChanged: (Boolean) -> Unit,
-//    modifier: Modifier = Modifier
-//) {
-//    Row(
-//        modifier = modifier.fillMaxWidth(),
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        LabelText(labelId)
-//
-//        Switch(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .wrapContentWidth(Alignment.End),
-//            checked = checked,
-//            onCheckedChange = onCheckChanged,
-//            thumbContent = if (checked) {
-//                {
-//                    Icon(
-//                        imageVector = Icons.Filled.Check,
-//                        contentDescription = null,
-//                        modifier = Modifier.size(SwitchDefaults.IconSize),
-//                    )
-//                }
-//            } else {
-//                null
-//            }
-//        )
-//    }
-//}
+@Composable
+fun AdaptativeLabelledInput(
+    labelId: Int,
+    modifier: Modifier = Modifier,
+    useSingleRow: Boolean = false,
+    entry: (@Composable () -> Unit)? = null,
+) {
+    if (useSingleRow) {
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            LabelText(labelId = labelId)
+
+            Spacer(Modifier.size(height = 1.dp, width = 32.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                entry?.invoke()
+            }
+        }
+    } else {
+        Column(modifier = modifier.fillMaxWidth()) {
+            LabelText(
+                labelId,
+                modifier = Modifier.padding(bottom = 5.dp)
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                entry?.invoke()
+            }
+        }
+    }
+}
+
 
 // ------------------------------------------------------------------------------------------------
 
@@ -906,26 +917,23 @@ fun SoundSelectRow(
 // -- "Schedule" section Widgets --
 
 @Composable
-fun TimeModeSegmentedButton(
-    checked: Boolean,
-    onCheckChanged: (Boolean) -> Unit,
+fun ScheduleTypeSegmentedButton(
+    selectedScheduleType: ReminderScheduleType,
+    onScheduleTypeChanged: (ReminderScheduleType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var selectedIndex by remember {
-        mutableIntStateOf(if (checked) 1 else 0)
+        mutableIntStateOf(ReminderScheduleTypeConverter.fromReminderScheduleType(selectedScheduleType))
     }
-    val options = listOf(
-        stringResource(R.string.time_mode_fixed_label),
-        stringResource(R.string.time_mode_random_label)
-    )
+    val options = ReminderScheduleType.entries.map {
+        stringResource(it.getLabelResId())
+    }
 
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+    AdaptativeLabelledInput(
+        R.string.schedule_type_label,
+        modifier,
+        useSingleRow = true,
     ) {
-        LabelText(R.string.time_mode_label)
-
         SingleChoiceSegmentedButtonRow {
             options.forEachIndexed { index, label ->
                 SegmentedButton(
@@ -935,10 +943,10 @@ fun TimeModeSegmentedButton(
                     ),
                     onClick = {
                         selectedIndex = index
-                        onCheckChanged(selectedIndex == 1)
+                        onScheduleTypeChanged(ReminderScheduleTypeConverter.toReminderScheduleType(selectedIndex))
                     },
                     selected = index == selectedIndex,
-                    label = { Text(label, fontSize = 12.sp) },
+                    label = { Text(label, fontSize = 12.sp, maxLines = 1) },
                     icon = {},
                 )
             }
@@ -956,37 +964,16 @@ fun TimeInputRow(
     is24Hour: Boolean,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+    AdaptativeLabelledInput(
+        R.string.edit_time_label,
+        modifier,
+        useSingleRow = true,
     ) {
-        LabelText(R.string.edit_time_label)
+        val alpha = alphaGreyOut(useRange)
 
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.End),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val alpha = alphaGreyOut(useRange)
-
-            TimeSelectorCard(startTime, onStartTimeChange, is24Hour, Modifier)
-
-            Text(text = " - ", Modifier.graphicsLayer(alpha = alpha))
-            TimeSelectorCard(endTime, onEndTimeChange, is24Hour, Modifier.graphicsLayer(alpha = alpha), enabled = useRange)
-
-
-//            when (useRange) {
-//                false -> {
-//                    TimeSelectorCard(startTime, onStartTimeChange, is24Hour, Modifier)
-//                }
-//                true -> {
-//                    TimeSelectorCard(startTime, onStartTimeChange, is24Hour, Modifier)
-//                    Text(text = " - ")
-//                    TimeSelectorCard(endTime, onEndTimeChange, is24Hour, Modifier)
-//                }
-//            }
-        }
+        TimeSelectorCard(startTime, onStartTimeChange, is24Hour, Modifier)
+        Text(text = " - ", Modifier.graphicsLayer(alpha = alpha))
+        TimeSelectorCard(endTime, onEndTimeChange, is24Hour, Modifier.graphicsLayer(alpha = alpha), enabled = useRange)
     }
 }
 
@@ -1086,15 +1073,10 @@ fun NotificationCountSlider(
     modifier: Modifier = Modifier,
     minvalue: Float = 1f
 ) {
-//    if (!enabled) return
-
-    Column(modifier = modifier.graphicsLayer(alpha = alphaGreyOut(enabled))) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            LabelText(labelId)
-        }
+    AdaptativeLabelledInput(
+        labelId,
+        modifier = modifier.graphicsLayer(alpha = alphaGreyOut(enabled))
+    ) {
         Slider(
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
@@ -1158,47 +1140,41 @@ fun DaySelectionRow(
     }
     val days = DayOfWeek.entries
 
-    Column(modifier) {
-        LabelText(
-            R.string.edit_days_selection_label,
-            modifier = Modifier.padding(bottom = 5.dp)
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            MultiChoiceSegmentedButtonRow {
-                days.forEachIndexed { index, day ->
-                    val isSelected = selectedDays.contains(day)
-                    SegmentedButton(
-                        modifier = Modifier.weight(1f),
-                        shape = SegmentedButtonDefaults.itemShape(index = index, count = days.size),
-                        checked = isSelected,
-                        onCheckedChange = {
-                            val newSelection = if (isSelected) {
-                                selectedDays - day
-                            } else {
-                                selectedDays + day
-                            }
-                            onSelectedDaysChanged(newSelection)
+    AdaptativeLabelledInput(
+        R.string.edit_days_selection_label,
+        modifier,
+    ) {
+        MultiChoiceSegmentedButtonRow {
+            days.forEachIndexed { index, day ->
+                val isSelected = selectedDays.contains(day)
+                SegmentedButton(
+                    modifier = Modifier.weight(1f),
+                    shape = SegmentedButtonDefaults.itemShape(index = index, count = days.size),
+                    checked = isSelected,
+                    onCheckedChange = {
+                        val newSelection = if (isSelected) {
+                            selectedDays - day
+                        } else {
+                            selectedDays + day
+                        }
+                        onSelectedDaysChanged(newSelection)
 
-                            if (newSelection.isEmpty()) {
-                                currentToast?.cancel()
-                                currentToast = Toast.makeText(
-                                    context,
-                                    R.string.day_selection_toast,
-                                    Toast.LENGTH_SHORT
-                                ).apply { show() }
-                            }
-                        },
-                        icon = {},
-                    ) {
-                        Text(
-                            text = getDayLabel(day),
-                            style = MaterialTheme.typography.labelMedium,
-                            maxLines = 1,
-                        )
-                    }
+                        if (newSelection.isEmpty()) {
+                            currentToast?.cancel()
+                            currentToast = Toast.makeText(
+                                context,
+                                R.string.day_selection_toast,
+                                Toast.LENGTH_SHORT
+                            ).apply { show() }
+                        }
+                    },
+                    icon = {},
+                ) {
+                    Text(
+                        text = getDayLabel(day),
+                        style = MaterialTheme.typography.labelMedium,
+                        maxLines = 1,
+                    )
                 }
             }
         }
@@ -1235,7 +1211,10 @@ fun EditScreenPreview() {
         EditScreenContent(
             modifier = Modifier.fillMaxSize(),
             uiState = ReminderEditUIState(
-                reminderDetails = ReminderDetails(title="Reminder", useRandomRange = true)
+                reminderDetails = ReminderDetails(
+                    title = "Preview Reminder",
+                    scheduleType = ReminderScheduleType.RANDOM
+                )
             )
         )
     }

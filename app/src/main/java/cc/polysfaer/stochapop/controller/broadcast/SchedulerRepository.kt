@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import cc.polysfaer.stochapop.data.reminder.Reminder
+import cc.polysfaer.stochapop.data.reminder.ReminderScheduleType
 import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import java.time.DayOfWeek
 import java.time.Duration
@@ -43,35 +44,36 @@ class SchedulerRepository(
 
         val useExact = shouldUseExactAlarm(reminder)
 
-        if (reminder.useRandomRange) {
+        if (reminder.scheduleType.useRange) {
             val localTimeSegment = getTimeSegmentInMinutes(
-                reminder.startTime,
-                reminder.endTime,
-                reminder.notificationCount
+                startTime = reminder.startTime,
+                endTime = reminder.endTime,
+                segmentCount = reminder.notificationCount
             )
             for (notificationId in 0 until reminder.notificationCount) {
-                val minOffset = (notificationId * localTimeSegment).toLong()
+                val minuteOffset = (notificationId * localTimeSegment).toLong()
                 val startTriggerTime = findNextTriggerDateTime(
-                    reminder.startTime,
-                    reminder.selectedDays,
-                    minOffset
+                    startTime = reminder.startTime,
+                    selectedDays = reminder.selectedDays,
+                    minuteOffset = minuteOffset
                 )
-                scheduleRandomNotificationAlarm(
-                    reminder.id,
-                    startTriggerTime,
-                    localTimeSegment,
-                    notificationId,
-                    useExact
+                scheduleRangedNotificationAlarm(
+                    reminderId = reminder.id,
+                    startTriggerTime = startTriggerTime,
+                    localTimeSegment = localTimeSegment,
+                    notificationId = notificationId,
+                    isRandom = reminder.scheduleType == ReminderScheduleType.RANDOM,
+                    useExact = useExact,
                 )
             }
         } else {
             val startTriggerTime = findNextTriggerDateTime(
-                reminder.startTime,
-                reminder.selectedDays
+                startTime = reminder.startTime,
+                selectedDays = reminder.selectedDays
             )
             scheduleNotificationAlarm(
-                reminder.id,
-                startTriggerTime,
+                reminderId = reminder.id,
+                triggerTime = startTriggerTime,
                 useExact = useExact
             )
         }
@@ -81,29 +83,30 @@ class SchedulerRepository(
      * Called by the Alarm Receiver. */
     fun scheduleReminderNextSingleAlarm(reminder: Reminder, notificationId: Int) {
         val startTriggerTime = findNextTriggerDateTime(
-            reminder.startTime,
-            reminder.selectedDays
+            startTime = reminder.startTime,
+            selectedDays = reminder.selectedDays
         )
 
         val useExact = shouldUseExactAlarm(reminder)
 
-        if (reminder.useRandomRange) {
+        if (reminder.scheduleType.useRange) {
             val localTimeSegment = getTimeSegmentInMinutes(
-                reminder.startTime,
-                reminder.endTime,
-                reminder.notificationCount
+                startTime = reminder.startTime,
+                endTime = reminder.endTime,
+                segmentCount = reminder.notificationCount
             )
-            scheduleRandomNotificationAlarm(
-                reminder.id,
-                startTriggerTime,
-                localTimeSegment,
-                notificationId,
-                useExact
+            scheduleRangedNotificationAlarm(
+                reminderId = reminder.id,
+                startTriggerTime = startTriggerTime,
+                localTimeSegment = localTimeSegment,
+                notificationId = notificationId,
+                isRandom = reminder.scheduleType == ReminderScheduleType.RANDOM,
+                useExact = useExact
             )
         } else {
             scheduleNotificationAlarm(
-                reminder.id,
-                startTriggerTime,
+                reminderId = reminder.id,
+                triggerTime = startTriggerTime,
                 useExact = useExact
             )
         }
@@ -182,19 +185,19 @@ class SchedulerRepository(
         // ---------------------------------------------------
     }
 
-    /** Schedule a random alarm in a time segment. */
-    private fun scheduleRandomNotificationAlarm(
+    /** Schedule a ranged alarm in a time segment. */
+    private fun scheduleRangedNotificationAlarm(
         reminderId: Int,
         startTriggerTime: LocalDateTime,
         localTimeSegment: Double,
         notificationId: Int,
-        useExact: Boolean = true
+        isRandom: Boolean,
+        useExact: Boolean,
     ) {
         val minOffset = (notificationId * localTimeSegment).toLong()
-        val maxOffset = ((notificationId + 1) * localTimeSegment).toLong()
-        val offset = Random.nextLong(minOffset, maxOffset.coerceAtLeast(minOffset + 1))
-        val triggerTime = startTriggerTime.plusMinutes(offset)
-
+        val maxOffset = ((notificationId + 1) * localTimeSegment).toLong().coerceAtLeast(minOffset + 1)
+        val randomOffset = Random.nextLong(minOffset, maxOffset)
+        val triggerTime = startTriggerTime.plusMinutes(if (isRandom) randomOffset else minOffset)
         scheduleNotificationAlarm(reminderId, triggerTime, notificationId, useExact)
     }
 
@@ -222,14 +225,14 @@ class SchedulerRepository(
 
     /** Return an unique intent request code from a reminderId and a notification index. */
     private fun getRequestCode(reminderId: Int, notificationId: Int) : Int {
-        return reminderId * ReminderSettings.RANDOM_NOTIFICATION_COUNT_LIMIT + notificationId
+        return reminderId * ReminderSettings.RANGED_NOTIFICATION_COUNT_LIMIT + notificationId
     }
 
     private fun shouldUseExactAlarm(reminder: Reminder): Boolean {
         val useExact = reminder.hasSound || reminder.hasVibration
 
         // On Android12+ the EXACT_ALARM permission could be revoked. If it's the case we'll use
-        // an non exact alarm instead. TODO: alert the user they should give back the permission.
+        // a non exact alarm instead. TODO: alert the user they should give back the permission.
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             useExact && alarmManager.canScheduleExactAlarms()
         } else {

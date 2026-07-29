@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cc.polysfaer.stochapop.R
 import cc.polysfaer.stochapop.controller.broadcast.SchedulerRepository
+import cc.polysfaer.stochapop.data.reminder.ReminderScheduleType
 import cc.polysfaer.stochapop.data.reminder.ReminderSettings
 import cc.polysfaer.stochapop.data.reminder.RemindersRepository
 import kotlinx.coroutines.flow.filterNotNull
@@ -66,8 +67,8 @@ class ReminderEditViewModel(
         it.copy(enabled = state)
     }
 
-    fun toggleRandomRange(state: Boolean) = updateReminderDetails {
-        it.copy(useRandomRange = state)
+    fun setScheduleType(scheduleType: ReminderScheduleType) = updateReminderDetails {
+        it.copy(scheduleType = scheduleType)
     }
 
     fun toggleSound(state: Boolean) = updateReminderDetails {

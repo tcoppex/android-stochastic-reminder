@@ -3,6 +3,7 @@ package cc.polysfaer.stochapop.data
 import android.content.Context
 import cc.polysfaer.stochapop.R
 import cc.polysfaer.stochapop.data.reminder.Reminder
+import cc.polysfaer.stochapop.data.reminder.ReminderScheduleType
 import cc.polysfaer.stochapop.ui.screens.reminder.ReminderDetails
 import cc.polysfaer.stochapop.ui.screens.reminder.toReminder
 import java.time.DayOfWeek
@@ -17,9 +18,9 @@ object DataSource {
                 title = context.getString(R.string.tuto_1_title),
                 message = context.getString(R.string.tuto_1_message),
                 enabled = false,
-                useRandomRange = false,
                 hasSound = true,
                 hasVibration = false,
+                scheduleType = ReminderScheduleType.FIXED,
                 selectedDays = setOf(DayOfWeek.MONDAY)
             ),
             ReminderDetails(
@@ -29,6 +30,7 @@ object DataSource {
                 enabled = false,
                 hasSound = false,
                 hasVibration = true,
+                scheduleType = ReminderScheduleType.RANDOM,
                 notificationCount = 5,
                 selectedDays = setOf(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY),
                 startTime = LocalTime.of(23, 30),
@@ -41,6 +43,7 @@ object DataSource {
                 enabled = false,
                 hasSound = false,
                 hasVibration = false,
+                scheduleType = ReminderScheduleType.RANGED,
                 notificationCount = 12,
                 selectedDays = setOf(DayOfWeek.SATURDAY)
             ),
@@ -49,9 +52,9 @@ object DataSource {
                 title = context.getString(R.string.tuto_4_title),
                 message = "◝(ᵔᗜᵔ)◜ ♡ ",
                 enabled = true,
-                useRandomRange = false,
                 hasSound = true,
                 hasVibration = true,
+                scheduleType = ReminderScheduleType.FIXED,
                 startTime = LocalTime.now().plusMinutes(1)
             ),
         ).map { it.toReminder() }
