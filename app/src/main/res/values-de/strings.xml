@@ -4,7 +4,8 @@
     <string name="new_screen_name">Neue Erinnerung</string>
     <string name="top_bar_arrow_desc">Zurück</string>
     <string name="home_btn_add">Erinnerung hinzufügen</string>
-    <string name="time_mode_random_label">Zufällig</string>
+    <string name="schedule_type_ranged_option">Sequenziell</string>
+    <string name="schedule_type_random_option">Zufällig</string>
     <string name="edit_reminder_default_title">Erinnerung</string>
     <string name="edit_enable_label">Aktivieren</string>
     <string name="edit_time_label">Zeit</string>
@@ -34,8 +35,8 @@
     <string name="tuto_3_message">Stumme Benachrichtigungen verbrauchen weniger Akku</string>
     <string name="tuto_4_title">Danke!</string>
     <string name="edit_alarm_custom_sound">Klingelton</string>
-    <string name="time_mode_label">Typ</string>
-    <string name="time_mode_fixed_label">Behoben</string>
+    <string name="schedule_type_label">Modus</string>
+    <string name="schedule_type_fixed_option">Fest</string>
     <string name="edit_section_card_schedule">Zeitplan</string>
     <string name="edit_section_card_content">Inhalt</string>
     <string name="ringtone_selection_title">Ton auswählen</string>
