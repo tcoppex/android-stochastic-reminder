@@ -21,7 +21,7 @@ enum class AppSettingsName(val key: String) {
 }
 
 class AppDataContainer(private val context: Context) : AppContainer {
-    override val prefs = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+    override val prefs: SharedPreferences = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
 
     override val remindersRepository: RemindersRepository by lazy {
         OfflineRemindersRepository(AppDatabase.getDatabase(context).reminderDao())

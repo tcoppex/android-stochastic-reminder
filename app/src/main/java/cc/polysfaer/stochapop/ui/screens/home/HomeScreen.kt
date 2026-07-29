@@ -61,6 +61,7 @@ import cc.polysfaer.stochapop.controller.NotificationChannels.hasPostNotificatio
 import cc.polysfaer.stochapop.controller.openAppSettings
 import cc.polysfaer.stochapop.data.DataSource
 import cc.polysfaer.stochapop.data.reminder.Reminder
+import cc.polysfaer.stochapop.data.reminder.ReminderScheduleType
 import cc.polysfaer.stochapop.ui.AppViewModelProvider
 import cc.polysfaer.stochapop.ui.navigation.NavigationDestination
 import cc.polysfaer.stochapop.ui.screens.ElasticScrollWrapper
@@ -268,10 +269,14 @@ fun ReminderCard(
                 }
 
                 CardInfoText(reminder.startTime.format(formatter))
-                if (reminder.useRandomRange) {
+
+                if (reminder.scheduleType.useRange) {
                     CardInfoText(" - ${reminder.endTime.format(formatter)}")
                     Spacer(modifier = Modifier.padding(horizontal = 5.dp))
                     CardInfoText("x${reminder.notificationCount}")
+                }
+                
+                if (reminder.scheduleType == ReminderScheduleType.RANDOM) {
                     Icon(
                         painter = painterResource(id = R.drawable.casino_24px),
                         contentDescription = "dice icon",

@@ -5,7 +5,6 @@
     <string name="new_screen_name">New Reminder</string>
     <string name="home_btn_add">Add Reminder</string>
     <string name="edit_enable_label">Enable</string>
-    <string name="time_mode_random_label">Random</string>
     <string name="edit_time_label">Time</string>
     <string name="edit_days_selection_label">Days of the week</string>
     <string name="edit_save_btn">Save</string>
@@ -35,8 +34,10 @@
     <string name="tuto_4_title">Thank you!</string>
     <string name="edit_reminder_default_title">Reminder</string>
     <string name="edit_alarm_custom_sound">Ringtone</string>
-    <string name="time_mode_label">Type</string>
-    <string name="time_mode_fixed_label">Fixed</string>
+    <string name="schedule_type_label">Mode</string>
+    <string name="schedule_type_fixed_option">Fixed</string>
+    <string name="schedule_type_ranged_option">Interval</string>
+    <string name="schedule_type_random_option">Random</string>
     <string name="edit_section_card_schedule">Schedule</string>
     <string name="edit_section_card_content">Content</string>
     <string name="ringtone_selection_title">Select Notification Sound</string>
