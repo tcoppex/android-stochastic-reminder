@@ -19,10 +19,8 @@ import java.time.ZoneId
 import kotlin.math.max
 import kotlin.random.Random
 
-
 const val INTENT_REMINDER_ID = "REMINDER_ID"
 const val INTENT_NOTIFICATION_ID = "NOTIFICATION_ID"
-
 
 class SchedulerRepository(
     private val context: Context
