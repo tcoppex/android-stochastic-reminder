@@ -1204,7 +1204,10 @@ fun alphaGreyOut(enabled: Boolean, outValue: Float = 0.25f): Float {
 
 // ------------------------------------------------------------------------------------------------
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+//    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 fun EditScreenPreview() {
     StochaPopTheme {
