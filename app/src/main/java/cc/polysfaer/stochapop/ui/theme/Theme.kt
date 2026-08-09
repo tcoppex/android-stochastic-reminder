@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import cc.polysfaer.stochapop.ui.AppTypography
 
-const val ENABLE_DARK_MODE = false
+const val ENABLE_DARK_MODE = true
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
